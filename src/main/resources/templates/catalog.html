@@ -25,6 +25,11 @@
                 <div class="content">
                     <div class="description" th:text="${{disc.price}}">9.99 €</div>
                 </div>
+                <div class="extra content" th:text="${disc.director}"> John McTiernan
+                </div>
+                <div class="extra content">
+	                <a th:href="@{https://de.wikipedia.org/wiki/{name}(name=${disc.name})}" th:text = "Wikipedia">Wikipedia</a>
+	               	</div>
                 <div class="extra content" th:text="${disc.genre}"> Action</div>
             </div>
         </div>

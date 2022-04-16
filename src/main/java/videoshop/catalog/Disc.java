@@ -39,7 +39,7 @@ public class Disc extends Product {
 
 	// (｡◕‿◕｡)
 	// primitive Typen oder Strings müssen nicht extra für JPA annotiert werden
-	private String genre, image;
+	private String genre, image, director;
 	private DiscType type;
 
 	// (｡◕‿◕｡)
@@ -52,15 +52,18 @@ public class Disc extends Product {
 	@SuppressWarnings({ "unused", "deprecation" })
 	private Disc() {}
 
-	public Disc(String name, String image, Money price, String genre, DiscType type) {
+	public Disc(String name, String image, String director, Money price, String genre, DiscType type) {
 
 		super(name, price);
 
 		this.image = image;
+		this.director = director;
 		this.genre = genre;
 		this.type = type;
 	}
-
+	public String getDirector() {
+		return director;
+	}
 	public String getGenre() {
 		return genre;
 	}
