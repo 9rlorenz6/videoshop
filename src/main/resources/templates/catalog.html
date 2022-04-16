@@ -28,7 +28,9 @@
                 <div class="extra content" th:text="${disc.director}"> John McTiernan
                 </div>
                 <div class="extra content">
-	                <a th:href="@{https://de.wikipedia.org/wiki/{name}(name=${disc.name})}" th:text = "Wikipedia">Wikipedia</a>
+	                <a th:href="@{https://de.wikipedia.org/wiki/{name}(name=${disc.name})}" th:text = "Wikipedia">Wikipedia</a><div class="tab"></div>
+	                <a th:href="@{https://www.imdb.com/find?q={name}(name=${disc.name})}" th:text = "IMdB">IMdB</a>
+
 	               	</div>
                 <div class="extra content" th:text="${disc.genre}"> Action</div>
             </div>
