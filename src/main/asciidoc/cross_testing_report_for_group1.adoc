@@ -1,0 +1,155 @@
+= Cross-Testing Feedback
+
+__Durchführende Gruppe:__ Gruppe 2 "Clown-College" +
+__Anwendung von Gruppe:__ Gruppe 1 "Geek-Shop"
+
+== Getestetes System
+Das Programm ist für den Shop "Think Nerd" gedacht, welcher Produkte für den typischen Nerd anbietet, und soll dabei primär an der Kasse eingesetzt werden und den Verkaufsvorgang elektronisch abwickeln können. Es gibt nur Angestellte und den Ladenbesitzer. Jeder Angestellte wird beim Einloggen mit einem zufälligen Nerdwitz begrüßt. Dementsprechend soll der Ladenbesitzer die Möglichkeit haben, Witze zu verwalten.
+
+Einzelne Mitarbeiter sollen sich mit ihrem Namen und einem sicheren Passwort anmelden können. Die Passwörter werden auf Sicherheit überprüft, unsichere werden nicht zugelassen z.B "mama". Mitarbeiter sollen vor allem Einkäufe von Kunden abwickeln. Das Sortiment ist in Kategorien wie z.B. "Nerd-Wear" oder "Elektronische Gagdets" gegliedert. Die Kategorien sind ihrerseits wieder in Unterkategorien wie z.B. "Admin-Shirts" o. "Gamer-Shirts" unterteilt. Mitarbeiter sollen sich zunächst durch das Sortiment klicken können oder über eine Suchfunktion Waren direkt finden. Angezeigte Ergebnisse sollen nach allen Kriterien (auf/absteigend nach Preis, nach Name...) sortiert werden können. Die Angestellten sollen die Möglichkeit haben, die Waren nacheinander in einen Warenkorb einzufügen. Im nächsten Schritt sollen die Angestellten eine Übersicht über den Einkauf erhalten und die Zahlungsweise eingeben können. Es ist für Kunden möglich per elektronischem Lastschriftverfahren, per Kreditkarte oder Bar zu zahlen. Nach der Bezahlung soll eine druckfertige Rechnung angezeigt werden. Es gibt eine 14-tägige Geld-zurück-Garantie. Falls ein Kunde etwas reklamieren möchte, soll(en) der/die Artikel ebenfalls in einen Warenkorb gelegt werden. Im nächsten Schritt soll noch einmal die Übersicht über die Reklamation gezeigt werden.
+
+Es ist dann erforderlich, dass der Abschluss einer Reklamation vom Ladenbesitzer genehmigt werden muss. Dazu muss Name und Passwort eingegeben werden. Der Ladenbesitzer ist für die Verwaltung der Mitarbeiter zuständig. Er kann sie entlassen, einstellen oder ihre persönlichen Daten verändern. Nur der Ladenbesitzer kann das Sortiment bearbeiten. Das heißt er kann Kategorien und Unterkategorien erstellen, löschen und umbenennen. Ebenfalls kann nur er Artikel hinzufügen, löschen und bearbeiten.
+
+Ein Überblick über den aktuellen Lagerbestand ist ebenfalls erforderlich. Der Ladenbesitzer muss den Bestand auch verändern können, um neue Lieferungen einzutragen. Wenn der Bestand eines Artikels eine untere Grenze unterschreitet, wird der Ladenbesitzer gewarnt werden. Der Ladenbesitzer kann auf "Rohdaten" aller Verkäufe zugreifen. Also wann, welcher Artikel, in welcher Menge verkauft wurde. Es wird eine Exportfunktion benötigt, die die Daten in eine XML-Datei schreibt.
+
+== Fehler-Report
+_Anmerkung:_ "http://localhost:8080" wurde mit drei Punkten "..." abgekürzt (Bsp.: http://localhost:8080/login -> .../login)
+
+[options="header"]
+|===
+|Pfad |Parameter |Beschreibung |Rückgabe
+|.../newProdukt/
+|_Name des Produkts:_ D20 +
+_Preis:_ +
+_OberKategorie:_ P&P Rollenspiel +
+_UnterKategorie:_ Würfel +
+_Stueckzahl:_ +
+_Beschreibung:_ 20-seitiger Würfel für Rollenspiele geeignet +
+_Fotodatei:_
+|Es gibt keinen Fehlerabfang, wenn ich das Feld "Preis" und/oder "Stueckzahl" nicht ausfülle.
+|Whitelabel Error Page
+
+|.../produktBearbeiten
+|_Name des Produkts:_ D20 +
+_Preis:_ 10.00 +
+_OberKategorie:_ P&P Rollenspiel +
+_UnterKategorie:_ Würfel +
+_Stueckzahl:_ 20 +
+_Beschreibung:_ 20-seitiger Würfel für Rollenspiele geeignet +
+_Fotodatei:_ *.png
+|Es wurde versucht, ein Produkt aus dem Sortiment zu bearbeiten. Alle Felder bis auf _Fotodatei_ wurden schon bei der Erstellung des Produkts ausgefüllt. Bei der Bearbeitung wurde nichts an den Eigenschaften des Produkts geändert, bis auf das Hinzufügen einer Fotodatei, da dies bei der Bearbeitung ein Pflichtfeld ist. Klickt man dann auf "Bestätigen!", führt das zu einem Fehler.
+
+Anzumerken ist, dass das nur bei Produkten passiert ist, die zuvor noch kein Foto hatten. Hat man bei Erstellung eines Produkts schon eine Fotodatei beigefügt, verlief die Bearbeitung fehlerfrei.
+|Whitelabel Error Page
+
+|.../katalog
+|leere Witzedatenbank
+|Klickt man auf das Katalog, erscheint eine Fehlerseite.
+|Whitelabel Error Page
+
+|.../katalog
+|
+|Wenn man mit der Maus über die Ober- und Unterkategorien der Produkte fährt, werden diese gehighlightet, als könnte man draufklicken. Es passiert jedoch nichts.
+|
+
+|.../warenkorb
+|
+|Befindet man sich im Warenkorb, egal ob dieser leer oder gefüllt ist, kann man sich nicht mehr ausloggen.
+|
+
+|.../warenkorb
+|
+|Klickt man neben die Buttons "Noch mehr Kaufen!" oder "Warenkorb leeren" funktionieren diese trotzdem.
+
+Diese zwei Buttons scheinen sich über die gesamte Seite zu erstrecken und sich nicht nur auf das jeweilige blaue Rechteck zu beschränken.
+|.../katalog
+
+|.../warenkorb
+|leerer Warenkorb, +
+kein Terminal für Kartenzahlung verbunden
+|Es erscheint die Aufforderung, man solle den "Terminal suchen"-Button drücken, dieser Button erscheint jedoch nicht
+|kein "Terminal suchen"-Button
+
+|.../register
+|_Name:_ Romy +
+_E-mail:_ romyfranz@ email.de +
+_Passwort:_ .......... +
+_Geburtsdatum:_ 01.01.2000 +
+_Geschlecht:_ °Mann °Frau °divers
+|Klickt man kein Geschlecht an und lässt somit dieses Feld frei, erfolgt eine Fehlerseite.
+
+Ist schon ein Mitarbeiter mit demselben Namen registriert, ergibt das ebenso ein Fehler.
+|Whitelabel Error Page
+|===
+
+== Sonstiges
+=== Optik der Anwendung
+Die Anwendung hat eine einheitliche Optik. Das umfasst einheitliches Buttondesign, sich nicht verändernde Navbar und Header, einheitliches Tabellendesign etc. Die Schriftgröße und -art ist gut lesbar und die Buttons sind auch als diese zu erkennen.
+
+Lediglich die Shopseite zu den Produkten könnte noch ein wenig überschaubarer gestaltet werden, ist aber dennoch verständlich, und im Warenkorb ist das [EUR] beim Preis im Tabellenkopf nichtig. Zudem sollte man die Buttons noch alle einheitlich auf Deutsch beschriften und den Rechtschreibfehler "Registerierung" in der Navbar beheben. Außerdem werden spezifisch in der Tabelle der Rechnungsdatenbank nur jede zweite Zeile gehighlightet, wenn man mit der Maus über die Zeilen fährt.
+
+=== Ungetestete Features
+[options="header"]
+|===
+|ID |Titel |Beschreibung
+|Anf_126
+|Reklamationsprüfung
+|Jede Reklamation soll nach dem Abgleich geprüft werden, ob die Reklamationsfrist von 14 Tagen eingehalten wurde.
+|===
+
+=== Fehlende Features
+[options="header"]
+|===
+|ID |Titel |Beschreibung
+|Anf_121
+|Warenkorbausschluss
+|Der Warenkorb kann entweder nur zu kaufende Produkte oder nur Reklamationen beinhalten.
+|Anf_123
+|Reklamationsprüfung über Bar
+|Per Knopfdruck wählt man "Barzahlung" aus und dann kann man über die Belegnummer die gespeicherte Rechnung in der Barzahlungsdatenbank finden. Der Mitarbeiter bestätigt mit einem Klick, wenn der Abgleich der Rechnungen erfolgreich verlief.
+|Anf_124
+|Reklamationsprüfung über Karte ohne Rechnung
+|Per Knopfdruck wählt man "Kartenzahlung, keine Rechnung" aus und dann kann man über die IBAN die gespeicherte Rechnung in der Kartenzahlungsdatenbank finden. Der Mitarbeiter bestätigt mit einem Klick, wenn der Abgleich der Rechnungen erfolgreich verlief.
+|Anf_125
+|Reklamationsprüfung über Karte mit Rechnung
+|Per Knopfdruck wählt man "Kartenzahlung, mit Rechnung" aus und dann kann man über die IBAN die gespeicherte Rechnung in der Kartenzahlungsdatenbank finden. Der Mitarbeiter bestätigt mit einem Klick, wenn der Abgleich der Rechnungen erfolgreich verlief.
+|Anf_127
+|Autorisation
+|Wenn alle Reklamationsprüfungen bestanden wurden, wird die Eingabe eines Benutzernamen und Passwords eines Admin verlangt.
+|Anf_129
+|Bedingungen der Reklamation prüfen
+|Erst wenn die Anforderungen 74 bis 78 durchlaufen wurden, kann die Reklamation in den Warenkorb gelegt werden.
+|Anf_129.5
+|Lagerbestandsanpassung bei Reklamation
+|Falls die Reklamation zurückgenommen wird, wird der Lagerbestand entsprechend erhöht.
+|Anf_150
+|XML-Export-Funktion
+|Auf der Adminverwaltungsseite kann man per Button die XML-Funktion aufrufen. Dort kann man auswählen, welche Datenbanken als eine XML-Datei exportiert werden soll.
+|Anf_151
+|XML speichern
+|Alle erstellten XML-Exporte, werden dann in einen Ordner (XML-Exporte) hinterlegt, auf den zugegriffen werden kann.
+|===
+
+=== Interaktion mit der Anwendung (Usability)
+
+Die Anwendung ist auch ohne Vorkenntnisse gut nutzbar. Alle Reiter und Buttons sind selbsterklärend. Alle Gruppenmitglieder konnten die Anwendung starten, trotz unterschiedlicher Browsernutzung.
+
+== Verbesserungsvorschläge
+.Anwendung: 
+* das Passwort sollte im Nachhinein änderbar sein
+* den vorgelesenen Witz könnte man einmalig als Sessionvariable einfügen, sodass er nicht immer wieder neu generiert und vorgelesen wird, wenn man auf das Katalog klickt, da es schnell nervig werden kann und man sowieso nur von dem Witz *begrüßt* werden soll (Tipp: siehe Clown-College -> der Nutzername und die Rolle, die oben rechts angezeigt werden, sind auch Sessionvariablen)
+* da die Registrierung über den Reiter "Registrierung" und über den Button "neuer Mitarbeiter registrieren" in der Mitarbeiterliste exakt die gleiche Funktion erfüllt, kann eines von beiden komplett weggelassen werden
+* der Name des Produkts sollte eindeutig gemacht werden, damit man nicht zwei Produkte mit demselben Namen erstellen kann
+* bei der Erstellung eines Produkts ist das Foto kein Pflichtfeld, bei der Bearbeitung jedoch schon (es wäre leichter, sich dafür zu entscheiden, es in der Erstellung zu einem Pflichtfeld zu machen, da man so den Whitelabel Error in der Bearbeitung umgehen kann)
+* bei der Bearbeitung des Produkts, wäre es besser, wenn die Fotodatei mit in das Bearbeitungsfenster übernommen wird und dass der Nutzer das "EUR" im Preis nicht immer manuell wegmachen muss
+* man sollte auch zulassen, dass Leute, die nicht zwischen 1990 und 1999 geboren wurden, einstellbar sind (Leute aus dem Jahrgang 2001 könnten auch exzellente Mitarbeiter sein, obwohl sie keine Millenials mehr sind)
+* die Sortierfunktion im Katalog ist noch verbesserungswürdig -> die Sortierung "Hauptkategorie" kann für Verwirrung sorgen, da sie absteigend zu sortieren scheint
+* die Suchfunktion ebenso -> Groß- und Kleinschreibung sollte bei der Eingabe nicht beachtet werden
+* es sind leere Witze möglich, was die Mitarbeiter vielleicht erfreut, aber bestimmt nicht vom Kunden gewollt ist
+
+.Pflichtenheft:
+* 1.3 Zielsetzung: klassisches V-Modell, aber agiles Scrum? Widerspruch
+* 3 Interessengruppen: nur der Ladenbesitzer als Stakeholder, wenn in den nächsten Diagrammen auch Mitarbeiter wichtig sind?
+* 4.1 Kontextdiagramm: warum zweimal Ladenbesitzer?
+* 5.1 Use-Case-Diagramm: auch doppelter Ladenbesitzer
+

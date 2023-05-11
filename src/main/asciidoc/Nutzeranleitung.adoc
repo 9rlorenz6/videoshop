@@ -1,0 +1,152 @@
+= Nutzeranleitung
+
+Dieses Dokument dient als Handbuch für die Benutzung der ClownCollege-Webanwendung.
+
+[options="header"]
+[cols="10%, 15%, 20%, 15%, 40%"]
+|===
+|Version| Status    | Bearbeitungs- datum | Autoren(en)    |  Vermerk
+|0.1    | In Arbeit | 13.06.2022        | Richard Lorenz |  Grundgerüst, Registrierung
+|0.2    | In Arbeit | 15.06.2022        | Leon Kunze     |  Inkassoverwaltung
+|0.3    | In Arbeit | 15.06.2022        | Astrid Rindfleisch |  Buchhaltung
+|0.4    | In Arbeit | 15.06.2022        | Sören Taube    |  Lagerverwaltung
+|0.5    | In Arbeit | 15.06.2022        | Romy Franz     |  Personalverwaltung
+|0.6    | In Arbeit | 15.06.2022        | Sören Taube    |  Kundenbereich, Umbennenung der Bereiche
+|1.0    | Erste Version | 16.06.2022    | Sören Taube    |  Inhaltsverzeichnis
+|1.1    | In Arbeit | 04.07.2022    | Leon Kunze     |  Überarbeitung Nutzeranleitung, Künstlerprofil
+|1.2    | Finale Version | 05.07.2022    | Leon Kunze     |  Überarbeitung Nutzeranleitung
+|===
+
+== Inhaltsverzeichnis
+
+=== * 
+
+==== 1. Registrierung
+
+==== 2. Kundenbereich
+
+==== 3. Inkassodienst
+
+==== 4. Personalverwaltung
+
+==== 5. Lagerverwaltung
+
+==== 6. Buchhaltung
+
+==== 7. Künstlerprofil
+
+=== * 
+
+== Einführung
+
+Dieses Dokument stellt die Nutzeranleitung des Projektes _ClownCollege_ dar. Es soll den Nutzer als Anleitung
+dienen, um sich präzise, exakt und ohne Problem durch die Anwendung zu navigieren. Außerdem soll es die Funktion
+der einzelnen Bereiche erläutern, um die Anwendung vollstens nutzen zu können.
+
+== Übersicht
+
+Das Produkt ClownCollege ist für die Präsentation von Veranstaltungsangeboten für geschlossene Gesellschaften
+sowie für die Verwaltung der in ClownCollege als Mitarbeiter eingetragene Personen gedacht.
+
+== 1. Registrierung
+
+Nach Start der Anwendung landen Sie auf die Empfangsseite. Hier können Sie zur Verfügung stehende Angebote, 
+mit samt der Details des Künstlers, einsehen. Möchten Sie jedoch ein Angebot buchen, müssen Sie sich vorher 
+registrieren. Wenn Sie auf [blue]#Registrieren# klicken, gelangen Sie auf die Registrierungsseite. Sobald 
+Sie alle Felder ausgefüllt haben, können Sie auf [blue]#registrieren# klicken. Wenn Sie sich im aktuell 
+nicht registrieren wollen, können Sie sich auch mit dem Benutzernamen _Testuser_ und dem Passwort _Test_
+beziehungsweise mit dem Benutzernamen _Berta80_ und dem Passwort _DasIstEinTest_ anmelden. Damit wurde ein 
+Account für Sie angelegt, wodurch Sie sich absofort einloggen können, indem Sie auf [blue]#Login# klicken. 
+Zusätzlich haben Sie die Möglichkeit, über [blue]#Mein Profil# Ihre Angaben zu ändern, sollte  dies nötig 
+sein. Sie können Ihren Account auch über [blue]#Konto löschen# entfernen. Stehen jedoch noch Zahlungen im 
+Bezug auf Ihren Account aus, ist diese Funktion deaktiviert. Über den Button [blue]#Logout# können Sie sich 
+wieder abmelden.
+
+<<<
+== 2. Kundenbereich
+
+[[Kundenbereich]]
+image::./models/docs/Bedienungsanleitung_Kundenbereich.png[Bedienungsanleitung_Kundenbereich, 100%, 100%, pdfwidth=100%, title= "Bedienung des Kundenbereichs", align=center, caption=""]
+Sobald Sie einen Künstler gebucht und diese Buchung bezahlt haben, erhalten Sie die Möglichkeit unter 
+[blue]#Angebote# auf [blue]#Bewerten# zu drücken, damit Sie uns Ihre Meinung geben können. Denn Ihre Meinung
+liegt uns sehr am Herzen.
+
+== 3. Inkassodienst
+
+Nachdem ein Nutzer eine Buchung durchgeführt hat, wird dieser im Inkassobereich aufgeführt, damit er auch 
+garantiert seine Schulden begleicht, mit welchen Mitteln auch immer. Dieser Bereich ist nur einsehbar, 
+wenn man die Rolle _Inkasso-Mitarbeiter_ oder _Boss_ besitzt. Deswegen melden Sie sich bitte mit dem 
+Benutzernamen _Krusty_ und dem Passwort _MoreMoney_, oder mit dem Benutzernamen _FatTony_ und dem Passwort
+_smashThem_ an und klicke Sie anschließend auf [blue]#Inkassobereich#.
+
+Hier sehen Sie eine Tabelle mit allen Nutzern, die noch eine Rechnung zu begleichen haben. Wenn Sie auf 
+[blue]#Bearbeiten# klicken, werden Sie auf eine neue Seite weitergeleitet, auf der Sie die Mahnstufe des 
+Nutzers ändern können. Um diese zu erhöhen, müssen Sie auf [blue]#Mahnstufe# [blue]#erhöhen# drücken.
+Wenn die Zahlung erfolgreich war und Sie somit den Nutzer aus dem Bereich entfernen wollen, damit auch 
+keine Schläger bei Ihn vorbeikommen muss, müssen Sie den Knopf [blue]#Zahlung# [blue]#erfolgreich# drücken.
+
+== 4. Personalverwaltung
+
+Die Personalverwaltung gibt eine Übersicht über alle Mitarbeiter. Dieser Bereich ist nur einsehbar, wenn 
+man die Rolle _HR-Mitarbeiter_ oder _Boss_ besitzt. Deswegen melden Sie sich bitte mit dem Benutzernamen 
+_Krusty_ und dem Passwort _MoreMoney_, oder mit dem Benutzernamen _Watcher_ und dem Passwort _GetYou_ an.
+Wenn Sie mit Ihrer Maus über den Button [blue]#Personalverwaltung# fahren, haben Sie die Auswahl zwischen 
+[blue]#Mitarbeiterliste#, [blue]#Künstlerliste# und [blue]#Nutzerübersicht#.
+
+Klicken Sie zunächst auf [blue]#Nutzerübersicht#. Hier sehen Sie eine Liste von allen registrierten Nutzern, 
+die keine Mitarbeiter des ClownColleges sind. Fahren Sie nun mit Ihrer Maus über [blue]#Einstellen Als# und 
+wählen sie eine Rolle aus. Dieser Nutzer gilt jetzt als Mitarbeiter des ClownColleges, und hat somit mehr
+Zugriffrechte als ein gewöhnlicher Nutzer, als auch wird er, je nach Auswahl, in der Mitarbeiter- oder 
+Künstlerliste aufgeführt. Wollen Sie einen komplett neuen Mitarbeiter anlegen, klicken Sie in der 
+Nutzerliste auf den Button  [blue]#Neuen Mitarbeiter Hinzufügen#, füllen alle Felder sachgemäß aus und 
+nachdem Sie auf [blue]#Mitarbeiter Hinzufügen# geklickt haben, wird dieser Account in der Mitarbeiterliste 
+aufgeführt.
+
+Wenn Sie nun in den Bereich [blue]#Mitarbeiterliste# wechseln, sehen Sie eine Liste der Mitarbeiter 
+(die Künstler befinden sich separat in der Künstlerliste). Nun können Sie Mitarbeitern Rollen über 
+[blue]#Rolle Hinzufügen# vergeben oder über [blue]#Rolle Wegnehmen# wegnehmen. Wenn Sie auf 
+[blue]#Gehalt Ändern# klicken, können Sie das Gehalt des Mitarbeiters individuell ändern. Wollen Sie einen 
+Mitarbeiter entlassen, dann klicken Sie auf [blue]#Entlassen# und bestätigen Sie Ihre Wahl. Nun wurden 
+diesem Nutzer all seine Rollen und somit auch Zugriffsrechte wieder weggenommen. Ebenfalls ist er nur noch 
+ein gewöhnlicher Nutzer, der nun wieder in der Nutzerliste aufgefürt wird.
+
+== 5. Lagerverwaltung
+
+Die Lagerverwaltung gibt eine Übersicht über das ganze Inventar. Dieser Bereich ist nur einsehbar, wenn 
+man die Rolle _Lagerist_ oder _Boss_ besitzt. Deswegen melden Sie sich bitte mit dem Benutzernamen 
+_Krusty_ und dem Passwort _MoreMoney_, oder mit dem Benutzernamen _LagerBoy_ und dem Passwort _schleppen_ 
+an.
+[[Lagerverwaltung]]
+image::./models/docs/Bedienungsanleitung_Lagerverwaltung.png[Bedienungsanleitung_Lagerverwaltung, 100%, 100%, pdfwidth=100%, title= "Bedienung der Lagerverwaltung", align=center, caption=""]
+
+== 6. Buchhaltung
+
+Die Buchhaltung gibt eine Übersicht über die Finanzen des ClownColleges. Dieser Bereich ist nur einsehbar, 
+wenn man die Rolle _Boss_ besitzt. Deswegen melden Sie sich bitte mit dem Benutzernamen _Krusty_ und dem 
+Passwort _MoreMoney_ an. Wenn Sie mit Ihrer Maus über den Button [blue]#Buchhaltung# fahren, haben Sie 
+die Auswahl zwischen [blue]#Einkünfte-Künstler#, [blue]#GuV Rechnung# und [blue]#Buchung#.
+
+Wenn Sie auf [blue]#Buchung# klicken, sehen Sie alle Buchung die getätigt wurden mit samt des Status der
+Bezahlung. Beim klicken auf [blue]#GuV Rechnung# können Sie die Gewinne und Verluste der einzelnen 
+Bereiche einsehen. Im Bereich [blue]#Einkünfte-Künstler# können Sie den Anteil, den der Künstler bekommt, 
+ändern. Dafür suchen Sie sich einen Künstler aus der Tabelle aus und klicken dann in der Spalte 
+_Prozentsatz bearbeiten_ auf [blue]#Bearbeiten#. Sie werden auf eine neue Seite weitergeleitet. Dort können 
+sie den Prozentsatz des Künstlers manuell verändern. Um den Prozentsatz zu übernehmen müssen sie nur auf 
+den Knopf [blue]#Prozentsatz Übernehmen# drücken.
+
+== 7. Künstlerprofil
+
+Das Künstlerprofil gibt, für den Künstler, eine Übersicht über alle Veranstallungen, für die er gebucht
+wurde. Dieser Bereich ist nur einsehbar, wenn man die Rolle _Künstler_ besitzt. Deswegen melden Sie sich 
+bitte mit dem Benutzernamen _Hudi69_ und dem Passwort _Magic_ an.
+
+Nach dem Sie dies getan haben, haben Sie die Möglichkeit auf [blue]#Veranstaltung# zu klicken. Ihnen werden 
+alle Veranstaltungen angezeigt, für die der Künstler gebucht wurde. Wenn Sie auf [blue]#Löschen# klicken, 
+können Sie die Buchung aus der Übersicht löschen, damit veraltete Buchungen Sie nicht überfluten.
+
+== Sicherheitshinweise
+
+ClownCollege vertraut auf seine Nutzer und deren eigenverantwortlichen Umgang mit digitalen Daten. Daher 
+wird die Sitzungssicherheit mittels HTTP/3 gewährleistet. ClownCollege Ltd. übernimmt keine Haftung für 
+Kosten, Schäden, Identitätsdiebstahl, sowie weitere Handlungen, die aus Datendiebstahl resultieren und 
+zum Nachteil eines Nutzers verwendet werden.

@@ -1,0 +1,482 @@
+= Test-Plan
+
+
+
+== Einführung
+
+Dieses Dokument ist für die Verantwortlichen der jeweiligen Komponenten geschrieben.
+Es soll als Fahrplan und Richtlinie dienen, wie die Tests der 
+einzelnen Bereiche und deren Klassen aufzubauen sind.
+
+== Aufbau der Testbezeichner
+
+Die jeweiligen Testbezeichner sollten sich an folgendes Muster halten: +
+U_Klassenname - Unit Test, +
+I_Klassenname - Integrationstest
+
+== Test Gegenstände
+
+Zu testen sind alle Komponenten und ihre zugehörigen Objekte.
+Klassen und Objekte werden mit JUnit getestet,
+die Funktionalität der Weboberfläche wird mit Selenium überwacht.
+
+== Test-Coverage
+
+Die Anwendung wird in einer unkritischen Umgebung eingesetzt, in der
+es keine strengen Regularien den Quellcode betreffend gibt. Aus diesem Grund
+wird ein Test-Coverage von mindestens 60% angestrebt, um den Testaufwand und
+den tatsächlichen Nutzen in guter Relation zueinander zu halten.
+
+== Zu testende Funktionalitäten
+
+So sind z.B. die fehlerfreie Registrierung von neuen Nutzern,
+die Prüfung auf fehlerhafte oder ungültige Eingabe und deren Interaktion mit 
+anderen Komponenten (Eventbuchung, Bewertung und Kommentar von Entertainern)
+zu prüfen.
+Im Zusammenhang damit sind auch die Funktionalität der Rollenzuweisung von Konten
+zu testen.
+
+== Nicht zu testende Funktionalitäten
+
+Funktionen, die Vom Salespoint-Framework zur Verfügung gestellt werden,
+sind nicht in den Tests enthalten.
+Dazu zählen Repository-Funktionen sowie alle Funktionen, die von Salespoint-
+Objekten geerbt werden.
+
+== Herangehensweise
+
+Jeder Verantwortliche wird zunächst seine Klassenmethoden im
+Blackbox-Verfahren mit JUnit testen und die Ergebnisse dokumentieren.
+Sobald ein bestimmter Grad an Funktionalitäten sichergestellt ist,
+können die Integrations- und Akzeptanztests in Angriff genommen werden.
+
+== Akzeptanztests
+
+Für die Akzeptanztests sind folgende im Vorfeld angelegte Accounts zu verwenden:
+[options="header", cols="15%h, 85%"]
+[[User_Profils]]
+|===
+|Rolle |Nutzerdaten
+|registrierter Nutzer a| 
+* Benutzername: "Testuser"
+* Passwort: "Test"
+* Vorname: "Hans"
+* Nachname: "Schmidt"
+* Adresse: Straße: "Teststr. 14", PLZ: "06110", Stadt: "Halle"
+* Telefonnummer: "017069696969
+* Email-Adresse: test@bert.com
+
+|Kunde                a| 
+* Benutzername: "Berta80"
+* Passwort: "DasIstEinTest"
+* Vorname: "Berta"
+* Nachname: "Test"
+* Adresse: Straße: "Ritterstr. 12", PLZ: "09111", Stadt: "Chemnitz"
+* Telefonnummer: "017611122333"
+* Email-Adresse: "Testberta@gmx.de"
+
+|Entertainer             a| 
+* Benutzername: "Hudi69"
+* Passwort: "Magic"
+* Vorname: "Harry"
+* Nachname: "Houdini"
+* Adresse: Straße: "Magic Place 18", PLZ: "88901", Stadt: "Las Vegas"
+* Telefonnummer: "016012345689"
+* Email-Adresse: "Houdini@tricks.com"
+* Profession: "Zauberer"
+* Preis pro Stunde: 120 Euro
+
+|Lagerist             a| 
+* Benutzername: "LagerBoy"
+* Passwort: "schleppen"
+* Vorname: "Ed"
+* Nachname: "O'Neill"
+* Adresse: Straße: "Jeopardy Lane 9764", PLZ: "60185", Stadt: "Chicago"
+* Telefonnummer: "444-333-5555"
+* Email-Adresse: "shoeMan@bundy.com"
+* Gehalt: 1 Euro
+
+|HR-Mitarbeiter       a| 
+* Benutzername: "Watcher"
+* Passwort: "GetYou"
+* Vorname: "Mark"
+* Nachname: "Sugarhill"
+* Adresse: Straße: "Hacker Way 1", PLZ: "94025", Stadt: "Menlo Park"
+* Telefonnummer: "650-543-4800"
+* Email-Adresse: "private@non-fb.com"
+* Gehalt: 1000000 Euro
+
+|Inkasso-Mitarbeiter  a| 
+* Benutzername: "FatTony"
+* Passwort: "smashThem"
+* Vorname: "Anthony"
+* Nachname: "Salerno"
+* Adresse: Straße: "E Cozy St 25", PLZ: "65807", Stadt: "Springfield"
+* Telefonnummer: "599-401-1234"
+* Email-Adresse: "FaceLift@meetup.com"
+* Gehalt: 5000 Euro
+
+|Boss                 a| 
+* Benutzername: "Krusty"
+* Passwort: "MoreMoney"
+* Vorname: "Herschel"
+* Nachname: "Krustofsky"
+* Adresse:  Straße: "534 Center St.", PLZ: "90701", Stadt: "Springfield"
+* Telefonnummer: "401-738-1526"
+* Email-Adresse: "krusty@thesimpsons.com"
+|===
+== Umgebungsvoraussetzungen
+
+Hardwareanforderungen: +
+Für die Durchführung der Tests wird keine spezielle Hardware erforderlich sein, da zum einen
+die softwareseitigen Tools auf den Entwicklungssystemen direkt zu Einsatz kommen können und 
+Spring Boot bereits viele Schnittstellen für die Tests vorkonfiguriert bereit stellt.
+
+Datenbereitstellung: +
+Die Bereitstellung von Testaccounts mit den angelegten, zugewiesenen Rollen dienen als Grundlage
+für eine erfolgreiche Testdurchführung. Diese Testaccounts müssen entsprechend obiger Vorgaben im
+Vorfeld angelegt werden. Darüber hinaus werden in der Testung des Registrierungsvorgangs Kundendaten
+produziert, welche neben dem bereits anzulegenden Testuser auch genutzt werden können.
+
+Softwareanforderungen: +
+- JUnit 5 als Tool für die Unit- und Integrations-Testung +
+- Selenium zur Durchführung von web-gestützten, automatisierten Akzeptanztests +
+- JaCoCo und SonarQubes als Tools zur Überprüfung des Test-Coverages
+
+Kommunikation der Testsoftware: +
+Im Zuge der Testdurchläufe werden vor allem lokale Test durchgeführt, weshalb auf Netzwerkintegration
+und Internetanbindung weitestgehend verzichtet werden kann.
+
+== Testfälle und Verantwortlichkeit
+
+Im Folgenden sind Beispiele für jeden Bereich der Anwendung festgelegt.
+diese Testfälle sind in ihrer Gesamtheit nicht vollständig und müssen von den Verantwortlichen der
+Bereiche vervollständigt werden.
+Für weitere Tests kann das Pflichtenheft konsultiert werden.
+Dabei sind aufgrund des MSC-Prinzips alle mit *M* markierten Testfelder zu priorisieren.
+Als Verantwortliche der Testbereiche werden festgelegt:
+
+=== Verantwortlichkeit
+[cols="10%h, 90%"]
+[options ="header"]
+|===
+|Bereich		|Verantwortlicher
+|UC01			|Richard Lorenz
+|UC02			|Richard Lorenz, Mousa Almahmoud
+|UC03			|Mousa Almahmoud
+|UC04			|Leon Kunze
+|UC05			|Romy Franz
+|UC06			|Sören Taube
+|UC07			|Astrid Rindfleisch
+|===
+=== Testfälle
+[cols="20%h, 80%"]
+[[TF0100]]
+|===
+|ID             |[UC0100]
+|Anwendungsfall |Anmeldung mit Zugangsdaten
+|Vorbedingung  a|
+* in der Anwendung sind registrierte Nutzer vorhanden
+|Ereignis      a|
+* Nutzer drückt den Button "Einloggen" in der Navigationsleiste auf der Startseite
+* er gibt Benutzername: "Testuser" und Passwort: "Test" ein
+* abschließend drückt er den Button "Einloggen"
+|Ergebnis      a|
+* Nutzer ist nun als "Testuser" angemeldet
+* er erhält eine persönliche Willkommensnachricht
+* er hat nun Zugriff auf den Bereich "Mein Account"
+|===
+
+[cols="20%h, 80%"]
+[[TF0101]]
+|===
+|ID             |[UC0101]
+|Anwendungsfall |[red]#Ausloggen#
+|Vorbedingung  a|
+* in der Anwendung ist der Nutzer "Testuser" angemeldet
+|Ereignis      a|
+* der Nutzer drückt auf "Ausloggen" in der Navigationsleiste
+|Ergebnis      a|
+* Nutzer ist nun abgemeldet und erhält darüber eine Meldung
+* er befindet sich auf der Startseite
+* er hat keinen Zugriff mehr auf den Bereich "Mein Account"
+|===
+
+[cols="20%h, 80%"]
+[[TF0110]]
+|===
+|ID             |[UC0110]
+|Anwendungsfall |[red]#Registrierung eines Kontos#
+|Vorbedingung  a|
+* ein unangemeldeter Nutzer verwendet die Anwendung 
+|Ereignis      a|
+* Nutzer drückt den Button "Registrieren" in der Navigationsleiste auf der Startseite
+* Nutzer gibt seine Daten ein:
+** Benutzername: "Meier0815"
+** Passwort: "neu"
+** Vorname: "Hans"
+** Nachname: "Meier"
+** Adresse: Straße: "Unter den Linden 1", PLZ: "10117", Stadt: "Berlin"
+** Telefonnummer: "017612345678"
+** Email-Adresse: meier@bertel.de
+* Nutzer drückt den Button "Registrieren"
+|Ergebnis      a|
+* Nutzer erhält eine Meldung über die erfolgreiche Registrierung und den Hinweis sich einzuloggen
+|===
+
+[cols="20%h, 80%"]
+[[TF0210]]
+|===
+|ID             |[UC0210]
+|Anwendungsfall |[red]#Eventbuchung#
+|Vorbedingung  a|
+* Nutzer ist angemeldet und besitzt die Rolle "Kunde"
+* es sind Künstler in der Anwendung vorhanden
+* Künstler hat *keine* Veranstaltung im geplanten Zeitraum 
+|Ereignis      a|
+* der Kunde drückt im Kundenbereich bei der Künstlerliste auf "Sofort buchen"
+* Eingabe der Veranstaltungsdaten in das Popup-Fenster:
+** Ort: "Merseburg"
+** Datum: "23.12.2022"
+** Uhrzeit: "15:30"
+** Dauer: "2,0 Stunden"
+* a) er bestätigt die Eingaben zuletzt durch Drücken des Buttons "Buchen"
+* der Kunde betätigt den Button "Warenkorb" in der Navigationsleiste
+* der Kunde wählt die Bezahlmethode "Bar bei Auftritt"
+* b) der Kunde drückt den Button "Bezahlen"
+|Ergebnis      a|
+* a) Kunde erhält die Mitteilung, dass die Buchung im "Warenkorb" gelandet ist (Validierung
+der Buchung erfolgreich)
+* b) Kunde erhält die Mitteilung, dass die Buchung erfolgreich war und die Buchungsdetails per Email
+zugesendet werden 
+|===
+
+[cols="20%h, 80%"]
+[[TF0211]]
+|===
+|ID             |[UC0211]
+|Anwendungsfall |[red]#Event kommentieren#
+|Vorbedingung  a|
+* Nutzer ist angemeldet und besitzt die Rolle "Kunde"
+* es sind Künstler in der Anwendung vorhanden
+* Künstler hat keine Veranstaltung im geplanten Zeitraum 
+|Ereignis      a|
+* der Kunde drückt im Kundenbereich bei der Künstlerliste den Button "Details" eines gewählten Künstlers
+* Eingabe der Veranstaltungsdaten in die vorgesehenen Formularfelder:
+** Ort: "Halle"
+** Datum: "20.12.2022"
+** Uhrzeit: "14:30"
+** Dauer: "1,5 Stunden"
+* a) er bestätigt die Eingaben zuletzt durch Drücken des Buttons "Buchen"
+* der Kunde betätigt den Button "Warenkorb" in der Navigationsleiste
+* der Kunde wählt die Bezahlmethode "Überweisung"
+* b) der Kunde drückt den Button "Bezahlen"
+|Ergebnis      a|
+* a) Kunde erhält die Mitteilung, dass die Buchung im "Warenkorb" gelandet ist (Validierung
+der Buchung erfolgreich)
+* b) Kunde erhält die Mitteilung, dass die Buchung erfolgreich war und die Buchungsdetails per Email
+zugesendet werden 
+|===
+
+[cols="20%h, 80%"]
+[[TF0240]]
+|===
+|ID             |[UC0240]
+|Anwendungsfall |[red]#Eventbuchung Zeitraum besetzt#
+|Vorbedingung  a|
+* Nutzer ist angemeldet und besitzt die Rolle "Kunde"
+* es sind Künstler in der Anwendung vorhanden
+* Künstler *hat eine* Veranstaltung im geplanten Zeitraum 
+|Ereignis      a|
+* der Kunde drückt im Kundenbereich bei der Künstlerliste den Button "Details" eines gewählten Künstlers
+* Eingabe der Veranstaltungsdaten in die vorgesehenen Formularfelder:
+** Ort: "Halle"
+** Datum: "20.12.2022"
+** Uhrzeit: "14:30"
+** Dauer: "1,5 Stunden"
+* er bestätigt die Eingaben zuletzt durch Drücken des Buttons "Buchen"
+|Ergebnis      a|
+* die Anwendung gibt eine Meldung, dass der gewünschte Zeitrahmen nicht möglich ist
+und ein anderer Zeitrahmen gewählt werden soll
+|===
+
+[cols="20%h, 80%"]
+[[TF0310]]
+|===
+|ID             |[UC0310]
+|Anwendungsfall |[red]#Buchungstermin-Übersicht#
+|Vorbedingung  a|
+* der Künstler muss angemeldet sein
+* es müssen Buchungstermine des Künstlers vorhanden sein
+|Ereignis      a|
+* der Künstler drückt auf den Button "Mein Profil" in der Navigationsleiste
+* nach Anzeige seines Profils drückt der Künstler auf den Kalender
+|Ergebnis      a|
+* es erfolgt eine Anzeige der Buchungstermine
+|===
+
+[cols="20%h, 80%"]
+[[TF0320]]
+|===
+|ID             |[UC0320]
+|Anwendungsfall |[red]#Angebotsänderung#
+|Vorbedingung  a|
+* der Künstler muss angemeldet sein
+|Ereignis      a|
+* der Künstler navigiert in sein Profil über den Button "Mein Profil"
+* der Künstler drückt den Button "Ändern"
+* daraufhin werden die Formularfelder seiner Daten änderbar und er tätigt seine Anpassung
+(Änderung des Berufs, des Veranstaltungstextes, des Materialbedarfs)
+* abschließend drückt der Künstler auf "Änderung speichern"
+|Ergebnis      a|
+* die Änderungen werden sofort im Profil sichtbar
+* die Änderungen sind in der Übersicht "Angebot" zu sehen
+|===
+
+[cols="20%h, 80%"]
+[[TF0410]]
+|===
+|ID             |[UC0410]
+|Anwendungsfall |[red]#Inkasso-Eintrag löschen#
+|Vorbedingung  a|
+* ein Kunde hat nicht fristgerecht seine Rechnung beglichen und wird in der Inkasso-Übersicht angezeigt
+* es wird davon ausgegangen, dass der Kunde nach Besuch des Inkasso-Mitarbeiters *bezahlt*
+|Ereignis      a|
+* der Inkasso-Mitarbeiter drückt den Button "Zahlung erfolgt"
+|Ergebnis      a|
+* der Kunde verschwindet aus der Inkasso-Übersicht
+|===
+
+[cols="20%h, 80%"]
+[[TF0411]]
+|===
+|ID             |[UC0410]
+|Anwendungsfall |[red]#Inkasso Mahnstufe erhöhen#
+|Vorbedingung  a|
+* ein Kunde hat nicht fristgerecht seine Rechnung beglichen und wird in der Inkasso-Übersicht angezeigt
+* es wird davon ausgegangen, dass der Kunde nach Besuch des Inkasso-Mitarbeiters *nicht bezahlt*
+|Ereignis      a|
+* der Inkasso-Mitarbeiter drückt den Button "Mahnstufe erhöhen"
+|Ergebnis      a|
+* der Kunde erhält erneut eine Frist zur Zahlung
+* erhöhte Mahnstufe wird angezeigt
+|===
+
+[cols="20%h, 80%"]
+[[TF0520]]
+|===
+|ID             |[UC0520]
+|Anwendungsfall |[red]#Mitarbeiterkonto löschen#
+|Vorbedingung  a|
+* der HR-Mitarbeiter muss angemeldet sein 
+|Ereignis      a|
+* der HR-Mitarbeiter geht in den Bereich "Personalverwaltung" über den Button in der Navigationsleiste
+* im Folgeschritt wird der betreffende Verwaltungsangestellte/Künstler ausgewählt
+* im Anschluss wir der Button "Entlassen" betätigt
+* zur Sicherheit muss die Auswahl in einem Dialog bestätigt werden
+|Ergebnis      a|
+* der entlassene Mitarbeiter verschwindet aus der Personalliste
+* der entlassene Mitarbeiter ist nicht mehr registriert und kann sich nicht mehr anmelden
+|===
+
+[cols="20%h, 80%"]
+[[TF0530]]
+|===
+|ID				|[UC0530]
+|Anwendungsfall |[red]#Gehalt ändern#
+|Vorbedingung  a|
+* der HR-Mitarbeiter muss angemeldet sein 
+* betreffender Nutzer benötigt die Rolle eines Verwaltungsangestellten
+|Ereignis      a|
+* der HR-Mitarbeiter geht in den Bereich "Personalverwaltung" über den Button in der Navigationsleiste
+* in der Übersicht wird dann der betreffende Angestellte ausgewählt
+* durch Drücken des Buttons "Bearbeiten" werden die Daten u.a. das Gehalt des Angestellten änderbar
+* der HR-Mitarbeiter legt den neuen Betrag fest
+* abschließend wir die Änderung durch Drücken des Buttons "Ändern" festgesetzt
+|Ergebnis      a|
+* der neue Betrag für das Gehalt wird bei dem entsprechenden Verwaltungsangestellten
+in der Personalübersicht angezeigt
+|===
+
+[cols="20%h, 80%"]
+[[TF0610]]
+|===
+|ID             |[UC0610] [UC0630]
+|Anwendungsfall |[red]#Lagerbestand ändern#
+|Vorbedingung  a|
+* der Lagerist muss angemeldet sein 
+* betreffender Warenposten muss vorhanden sein
+|Ereignis      a|
+* der Lagerist geht über die Navigationsleiste der Startseite auf "Lagerverwaltung"
+* er wählt den betreffenden Warenposten aus
+* er drückt auf den Button "Einlagern"
+* im Dialog gibt er die hinzuzufügende Menge und den Preis ein
+* abschließend wird die Änderung über "Verbuchen" bestätigt
+|Ergebnis      a|
+* in der Übersicht der Warenposten wird der neue Bestand des betreffenden Warenpostens angezeigt
+|===
+
+[cols="20%h, 80%"]
+[[TF0621]]
+|===
+|ID             |[UC0620]
+|Anwendungsfall |[red]#Lagerartikel löschen#
+|Vorbedingung  a|
+* der Lagerist muss angemeldet sein
+|Ereignis      a|
+* der Lageristen geht über die Navigationsleiste der Startseite auf "Lagerverwaltung"
+* in der erscheinenden Übersicht wählt er sich den betreffenden Warenposten aus
+* der Lageristen drückt den Button "Entfernen" und erhält einen Warndialog
+* abschließend wird über den Button "Bestätigen" die Änderung gespeichert
+|Ergebnis      a|
+*  in der Übersicht der Warenposten wird der gelöschte Warenposten nicht mehr geführt
+|===
+
+[cols="20%h, 80%"]
+[[TF0710]]
+|===
+|ID             |[UC0710]
+|Anwendungsfall |[red]#Ertragsübersicht Boss#
+|Vorbedingung  a|
+* der Nutzer Boss muss angemeldet sein
+* Künstler müssen in der Anwendung vorhanden sein
+|Ereignis      a|
+* der Boss betätigt den Button "Einkünfte - Künstler" als Sub-Menüpunkt
+der "Buchhaltung" auf der Navigationsleiste
+|Ergebnis      a|
+* die Anwendung stellt dem Boss eine Übersicht aller Künstler zur Verfügung
+mit einer Summation ihrer Einkünfte aus Buchungen und ihrer Buchungszahl
+|===
+
+[cols="20%h, 80%"]
+[[TF0720]]
+|===
+|ID             |[UC0720]
+|Anwendungsfall |[red]#Bilanzansicht Boss#
+|Vorbedingung  a|
+* der Nutzer Boss muss angemeldet sein
+|Ereignis      a|
+* der Boss betätigt den Button "GuV Rechnung" als Sub-Menüpunkt
+der "Buchhaltung" auf der Navigationsleiste
+|Ergebnis      a|
+* die Anwendung stellt dem Boss eine Übersicht aller Einnahmen und Ausgaben im aktuellen Jahr auf
+|===
+
+[cols="20%h, 80%"]
+[[TF0730]]
+|===
+|ID             |[UC0730]
+|Anwendungsfall |[red]#Anteilsbestimmung von Mitarbeitern#
+|Vorbedingung  a|
+* der Nutzer Boss muss angemeldet sein
+|Ereignis      a|
+* der Boss betätigt den Button "Einkünfte - Künstler" als Sub-Menüpunkt
+der "Buchhaltung" auf der Navigationsleiste
+* aus der Übersicht der Künstler wählt er sich den Künstler aus,
+dessen Anteile angepasst werden sollen
+* er betätigt den Button "Anteil bestimmen" und legt den neuen Prozentsatz fest
+* abschließend bestätigt er die Änderung durch Drücken des Buttons "Festlegen"
+|Ergebnis      a|
+* in der Übersicht über alle Künstler wird bei dem betreffenden Künstler der
+neue Anteil angezeigt
+|===

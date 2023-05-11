@@ -1,378 +1,519 @@
+= Entwicklerdokumentation
+:project_name: Clown-College
+
 [options="header"]
-[cols="1, 3, 3"]
+[cols="1, 3, 3, 3"]
 |===
-|Version | Processing Date   | Author 
-|1.0	| October 29th, 2019 | Daniel Schoenicke 
+|Version | Bearbeitungsdatum | Autor 			|  Vermerk
+|0.1	 | 12.05.2022 		 | Richard Lorenz 	| Registrierung/Login
+|0.2	 | 15.05.2022 		 | Leon Kunze 		| Kontextabgrenzung/Softwarearchitektur/Inkassodienst/Buchhaltung
+|0.3	 | 15.05.2022        | Sören Taube		| Benutzeroberfläche, Klassendiagramme (Kundenbereich, Lagerverwaltung)
+|0.4	 | 15.05.2022 		 | Mousa Almahmoud 	| Künstlerverwaltung
+|0.5	 | 16.05.2022 		 | Romy Franz   	| Einführung & Ziele, Randbedingungen, Lösungsstrategie, Personalverwaltung
+|0.6     | 16.05.2022        | Sören Taube      | Update Rückverfolgbarkeit, externe Pakete, Sequenzdiagramme (Kundenbereich, Lagerverwaltung)
+|1.0	 | 16.05.2022		 | Romy Franz		| Rechtschreibkorrektur
+|1.1	 | 22.05.2022	  	 | Sören Taube		| Umgestaltung Abschnitt 4.3, Datenpersistenz
+|1.2	 | 23.05.2022	  	 | Mousa Almahmoud	| Update Entertainer Diagramme(Abschnitt 5.6 ,6.6)
+|1.3	 | 05.07.2022		 | Romy Franz		| Überarbeitung: Sequenzdiagramme für Registrierung/Login, Buchhaltung, Inkassodienst, Künstlerverwaltung, Personalverwaltung
+|1.4	 | 12.07.2022		 | Romy Franz		| Überarbeitung: Diagramme zur Benutzeroberfläche, Klassendiagramme für Personalverwaltung, Inkassodienst, Lagerverwaltung
+|1.5	 | 13.07.2022		 | Romy Franz 		| Überarbeitung: Klassendiagramm für Buchhaltung, Registrierung/Login, Künstlerverwaltung, Kundenbereich
+|2.0	 | 15.07.2022		 | Romy Franz		| Überarbeitung: Verwendung externer Frameworks, Beschreibung der Klassen
 |===
 
-:project_name: Videoshop
-:company_name: Chair of Software Technology
 :toc: left
 :numbered:
 
-= Developer Documentation
+== Einführung und Ziele
+=== Qualitätsziele
+Das 1995 von Krusty errichtete _Springfielder Clown-College_ soll zu einem Entertainment-Center ausgebaut 
+werden, in dem neben Clowns auch Musiker, Zauberer, Comedians, Weihnachtsmänner und dergleichen bestellt 
+werden können. Dazu werden Verwaltungsangestellte vonnöten sein, die hingegen nicht gebucht werden können. 
+Die Verwaltungsangestellten (_StaffMember_) beziehen ein festes Gehalt und die Künstler (_Entertainer_) werden für jeden geleisteten 
+Auftritt vom College bezahlt. Dies läuft über den HR-Mitarbeiter, der alle Gehälter einsehen und bearbeiten kann.
 
-== Introduction and Goals
-=== Task Definition
+Die Künstler brauchen für ihre Auftritte Material aus dem zentralen Materiallager des Colleges. Dabei 
+ist zu beachten, dass zwischen Verbrauchsgüter, welche bei den Auftritten vernichtet werden, und Gebrauchsgüter, 
+welche nach beendetem Auftritt wieder zur Verfügung stehen, unterschieden werden muss. Nach jeder Buchung wird 
+automatisch der Materialbestand verringert bzw. können Lageristen den Bestand manuell erhöhen oder 
+reduzieren. Bei Unterschreitung des Mindestbestand wird eine Warnung abgegeben.
 
-_Note: This task aims to provide an example for the {project_name}._
-_It is written from the perspective of the client of this project ({company_name}) and therefore can be seen as a requirements specification._
-_You usually cannot expect such a document to be complete or even consistent, which is why you should always ask in case of uncertainty._
-_Wherever information about the domain is provided, we used_ _italic_ _to show the representation in the domain model._
+Die Adresse des Kunden (_Customer_) muss erst im Kundenregister erfasst werden, um buchen zu dürfen, damit bei eventuellem 
+Zahlungsverzug entsprechend gehandelt werden kann. Je länger der Zahlungsverzug andauert, desto höher wird 
+die Stufe der im Register stehenden Handlungsempfehlung, nach der sich die Inkasso-Mitarbeiter (_Collector_)
+richten. Der Status des Zahlungsverzugs kann von den Inkasso-Mitarbeitern bearbeitet werden.
 
-The times when people went to buy their movies physically in the store are mostly over.
-As we, the {company_name}, have always had our little secondary business of selling movies to students, this change affects us as well.
-Therefore, we finally want to take the leap to move our business into an online shop.
-We need a software, which can support all of the core aspects of our current shop and automatize processes wherever possible.
+Die erstellte Software soll auf dem zentralen Rechner des Colleges laufen und durch Mitarbeiter bedient werden. 
+Jeder Mitarbeiter hat nur auf die Bereiche Zugriff, die für ihn relevant sind. Das wird durch eine 
+Registrierungsmöglichkeit und entsprechender Rollenzuweisung umgesetzt. Bei der ersten Registrierung wird dem 
+Nutzer eine eindeutige ID zugewiesen und er bekommt automatisch die Rolle "Kunde". Der "Boss", dessen Rolle 
+einmalig Krusty zugeordnet wurde, oder ein "HR-Mitarbeiter" kann dann dem registrierten Nutzer eine weitere Rolle 
+zuweisen.
 
-Our Shop (_Videoshop_) can have any number of users (_User_) which may interact with it differently.
-Every visitor of our shop may access the catalog (_VideoCatalog_) and its whole functionality.
-The catalog contains every article (_Disc_) we offer and distinguishes between DVDs (_Dvd_) and Blu-Rays (_BluRay_).
-The Discs are stored in an inventory (_Inventory_), where they are represented by items (_InventoryItem_).
-An item saves the current stock (_quantity_) of the Disc.
-Whenever something is sold, the quantity of the item has to be reduced (_decreaseQuantity_) accordingly to represent the stock correctly.
+Nur der _Boss_ kann jederzeit Statistiken über die Mitarbeiter und den finanziellen Status des Colleges abrufen.
+Diese umfassen eine Gewinn- und Verlustrechnung, die Gesamtverdienste der Künstler, die Gesamtkosten der 
+Verwaltungsangestellten und den Zahlungsstatus der Kunden. Zudem kann der Boss bestimmen, wie viel Prozent des 
+Stundenlohns des Künstlers an das Clown-College abzugeben sind.
 
-Besides normal users in our system (_Customer_), we also want administrative access (_Boss_) to manage our shop.
-Whenever a customer likes something from our catalog, he may add it (_addDisc_) to his virtual basket (_Cart_, _CartItem_) in any quantity (_quantity_) .
-The contrary is obviously desired as well, to allow our customers to change their mind (_removeDisc_).
-During the whole process, the customer shall obviously be able to view his selection and see total price of it (_getPrice_).
-We are especially interested in the automation of the ordering process, which is why we require support for directly buying the content of the cart (_buy_).
+Zusammengefasst, soll Krusty durch eine schöne und bedienerfreundliche Anwendung bei seinem Vorhaben 
+unterstützen werden, die Angebote, die Popularität und die Umsätze des Clown-College in neue Rekordhöhen schnellen 
+zu lassen.
 
-After deciding to buy something, an order (_Order_) with the current time (_dateCreated_) is created.
-It contains each of the chosen items (_OrderLine_) with their quantity (_quantity_) and price (_price_).
-If the chosen item is not available in the sufficient quantity (_hasSufficientQuantity_), an error should be shown to the customer.
-As long as the customer did not pay, the order is registered in the system and assigned a status (_OrderStatus_), but not yet processed (_OPEN_).
-After receiving the money from the customer (_payOrder_), which he may provide through different methods (_paymentMethod_), the order may be processed further (_PAID_).
-As the order is shipped to the customer, it should be archived (_completeOrder_, _COMPLETED_), as returns or refunds are ruled out :).
-Should any unforeseen circumstances occur, we obviously do not want an order to be stuck in the system (_CANCELLED_).
+=== Qualitätsziele
+Um die Qualität der Anwendung messen zu können, müssen Qualitätsziele definiert und erfüllt werden.
 
-Our shop should obviously provide the means for a visitor to register (_register_).
-As we do only want registered users to have access to some functionality, a security system is required.
-We do trust the state-of-the-art authentication mechanism with e-mail (_email_) and a password (_password_).
-However, as we do not want to force visitors to register, they shall be able to leave a comment (_addComment_) with their opinion (_text_) and a rating (_rating_) for every disc in the catalog.
+Bedienbarkeit::
+Maß, bis zu dem die Anwendung von einem spezifischen Benutzer bei spezifischer Verwendung ein spezifisches Ziel 
+mit Effektivität, Effizienz und Zufriedenheit erwartet werden kann.
 
-All in all, we want a nice, fast and secure system, which allows us to administrate all of our customers and the stock.
-It should support our ordering process and allow us to manage everything related to it.
-The user experience should be awesome, with a beautiful user interface and a layout, which boosts our sales.
+Sicherheit::
+Maß, bis zu dem die Anwendung Informationen und Daten schützt, damit die Verwender nur genau den Datenzugriff 
+haben, zudem sie berechtigt sind.
 
-=== Quality Demands
+Zuverlässigkeit::
+die Wahrscheinlichkeit einer fehlerfreien Software-Anwendung über eine spezifizierte Zeitdauer und unter spezifizierten Umgebungsbedingungen.
 
-To measure the quality of the application, quality demands have to be defined, which have to be fulfilled. 
-_Note: The following descriptions are derived from the https://iso25000.com/index.php/en/iso-25000-standards/iso-25010[ISO/IEC 25010 Software Quality Model^].
+Wartbarkeit::
+die Einfachheit, mit der ein Softwaresystem oder eine Softwarekomponente modifiziert werden kann, um Fehler zu 
+beheben, Performanz oder andere Attribute zu verbessern oder Anpassungen an die veränderte Umgebung vorzunehmen.
 
-Maintainability::
-This characteristic represents the degree of effectiveness and efficiency with which a product or system can be modified to improve it, correct it or adapt it to changes in environment, and in requirements.
+Erweiterbarkeit::
+Grad der Effektivität und Effizienz, mit der die Anwendung  erweitert werden kann, um eventuell später
+hinzukommenden Anforderungen erfüllen zu können.
 
-Usability::
-Degree to which a product or system can be used by specified users to achieve specified goals with effectiveness, efficiency and satisfaction in a specified context of use.
+Die Qualitätsmerkmale der zu erstellende Anwendung und ihre Wichtigkeit (von 1 = geringe Wichtigkeit 
+bis 5 = hohe Wichtigkeit), die für eine Entscheidungsfindung herangezogen werden sollen, lauten wie folgt:  
 
-Security::
-Degree to which a product or system protects information and data so that persons or other products or systems have the degree of data access appropriate to their types and levels of authorization.
-
-The following table shows what quality demands have to be fulfilled to which extent.
-The first column lists the quality demands, while in the following columns an "x" is used to mark the priority.
-
-1 = Not Important ..
-5 = Very Important
 [options="header", cols="3h, ^1, ^1, ^1, ^1, ^1"]
 |===
-|Quality Demand           | 1 | 2 | 3 | 4 | 5
-|Maintainability          |   |   |   | x |
-|Usability                |   |   | x |   |
-|Security                 |   |   |   | x |
+|Qualitätsmerkmal  | 1 | 2 | 3 | 4 | 5
+|Bedienbarkeit     |   |   |   | x |
+|Sicherheit        |   |   | x |   |
+|Zuverlässigkeit   |   |   |   | x |
+|Wartbarkeit       |   | x |   |   |
+|Erweiterbarkeit   | x |   |   |   |
 |===
 
-== Constraints
-=== Hardware Specifications
-A list of necessary devices / hardware to run and use the application.
+== Randbedingungen
+=== Hardware-Vorgaben
+Eine Liste von Hardware, die man benötigt, um die Anwendung ausführen und benutzen zu können.
 
 * Server
 * Computer
-* Keyboard
-* Mouse
+* Tastatur
+* Maus
 
-=== Software Specifications
-A list of necessary software to run and use the application.
+=== Software-Vorgaben
+Eine Liste von Software, die man benötigt, um die Anwendung ausführen und benutzen zu können.
 
-The following (or newer) Java version is necessary to run the application:
+Die folgende (oder neuere) Java Version wird benötigt, um die Anwendung auszuführen.
 
 * Java 11
 
-The following (or newer) browser versions are necessary to use the application:
+Die folgenden (oder neueren) Browser Versionen werden Benötigt, um die Anwendung auszuführen.
 
-* Internet Explorer / Edge 10.0
-* Firefox 4.0
-* Google Chrome 4.0
-* Opera 9.6
+* Internet Explorer / Edge 101.0
+* Firefox 100.0.1
+* Google Chrome 101.0.4951.64
+* Opera 86.0
 
-=== Product Usage
-This section is going to give an overview of how the product is intended to be used upon completion and under which circumstances.
+=== Vorgaben zum Betrieb des Software
+Hier wird ein Überblick gegeben, wie und unter welchen Umständen das Produkt nach Fertigstellung genutzt werden
+soll.
 
-The system is going to be used as a web shop by the {company_name} to sell movies (discs) to students.
-The software is supposed to run on a server and be available through the internet (via a browser) to interested customers 24/7.
+Die Software wird als Entertainment-Center genutzt werden, über das Künstler über eine öffentliche 
+Schnittstelle gebucht werden können. Zudem werden Verwaltungsmitarbeiter sie nutzen, um über sie das Materiallager, das 
+Kundenregister und die Finanzen zu pflegen. Krusty wird in einer übergeordneten Position Zugriff auf alle 
+Bereiche haben.
 
-The primary users of the software are students (customers), who supposedly know typical website navigation schemas, as well as administrators (Boss),
-who do not necessarily have a technical background.
+Die Webanwendung soll von Kunden mit gewöhnlichem Wissen der Webseitennavigation, sowie Verwaltungsangestellten und 
+Krusty, welche keinen Hintergrund im Technikbereich haben müssen, genutzt werden.
 
-The system shall not need technical maintenance, as the staff of the {company_name} already has its hands full.
-Any data shall be stored persistently in a database and be accessible through the application (e.g. no SQL knowledge should be required for a boss).
+Das Produkt soll nur wenig Wartung benötigen und die Daten sollen dauerhaft in einer Datenbank gespeichert und über 
+die Anwendung zugreifbar sein.
 
-== Context and Scope
-=== Context Diagram
-image:diagrams/images/videoshop_context.svg[context diagram]
+== Kontextabgrenzung
+[[Kontextdiagramm]]
+image::./models/design/Kontextdiagramm.png[Kontextdiagramm, 80%, 80%, pdfwidth=80%, title= "Kontextdiagramm von {project_name}", align=center, caption="Abbildung 1: "]
 
-_Note: Since Salespoint and Spring Security are used in the implementation, there are no external interfaces._
+== Lösungsstrategie
+=== Erfüllung der Qualitätsziele
+[options="header"]
+|=== 
+|Qualitätsziel |Lösungsansatz
+|Bedienbarkeit a|
+* *Verständlichkeit* Sorge dafür, dass die Anwendung mit Leichtigkeit genutzt und verstanden werden kann. Das kann realisiert werden, indem man Inhalte mit genügend und eindeutigen Labels versieht.
+* *Fehlersicherung* Schütze die Nutzer vor dem Machen von Fehlern. Ungültige Eingaben sollen nicht zu einem ungültigen Systemstatus führen. 
+* *Ästetisches Nutzerinterfaces* Biete ein ansehnliche und zufriedenstellende Interaktion für den Nutzer.
+* *Zugänglichkeit* Sorge dafür, dass Nutzer mit vielfältigen Eigenschaften die Anwendung nutzen können. Das kann durch geeignete Fontgröße und Farbkontrast realisiert werden.
+|Sicherheit a|
+* *Vertraulichkeit* Sorge dafür, dass nur auf genau die Daten zugegriffen werden kann, für die der jeweilige Nutzer autorisiert ist. Das kann mit _Spring Security_ und _Thymeleaf_ (`sec:authorize` - tag) realisiert werden.
+* *Integrität* Unterbinde unautorisierte Änderungen von Daten. Das kann mit _Spring Security_ (`@PreAuthorize` - annotation). realisiert werden.
+* *Haftung* Rückverfolgbarkeit von Handlungen oder Events auf eine Entität oder Person.
+|Zuverlässigkeit a|
+* *Akzeptanz* Erstelle und durchlaufe Testfälle. Beachte die zugehörigen Spezifikationen, damit keine Inkonsistenz zwischen den Testfällen und Software-Spezifikation auftreten.
+|Wartbarkeit a|
+* *Bausteinprinzip* Teile die Anwendung in Komponenten auf, sodass Änderungen innerhalb einer Komponenten wenig Auswirkung auf andere Komponenten haben.
+* *Modifizierbarkeit* Sorge dafür, dass die Anwendung modifiziert werden kann, ohne Fehler oder Qualitätsmängel zu erzeugen.
+|Erweiterbarkeit a|
+* *Bausteinprinzip* Teile die Anwendung in Komponenten auf, sodass Änderungen innerhalb einer Komponenten wenig Auswirkung auf andere Komponenten haben.
+* *Wiederverwendbarkeit* Sorge dafür, dass die Komponenten der Anwendung von anderen Komponenten wiederverwendet werden können.
+* *Erweiterbarkeit* Sorge dafür, dass die Anwendung modifiziert werden kann, ohne Fehler oder Qualitätsmängel zu erzeugen.
+|===
 
-== Solution Strategy
-=== Quality Demand Fulfillment
-_Note: The following table shows the previous defined quality demands and solution approaches to fulfill them._
+=== Softwarearchitektur
+[[Komponentendiagramm]]
+image::./models/design/Komponentendiagramm_Dev_Doku.png[Komponentendiagramm_Dev_Doku, 80%, 80%, pdfwidth=80%, title= "Komponentendiagramm von {project_name}", align=center, caption="Abbildung 2: "]
+
+=== Entwurfsentscheidungen
+
+==== Verwendete Muster
+Die Anwendung folgt dem MVC-Schema. Die Client Requests werden vom Dispatcher-Servlet
+entgegengenommen und an den entsprechenden Controller weitergeleitet. Dieser bedient
+sich des auf Basis relationalen Mappings zur Verfügung gestellten Modells und liefert
+über das Dispatcher-Servlet in Verbindung mit der Thymeleaf Template-Engine die
+entsprechende View als Response an den Client aus.
+
+==== Persistenz
+Die Persistenz dieser Anwendung wird durch eine H2 Datenbank mittels relationalem Mapping gewährleistet.
+Grundlage hierfür bildet die Jakarta Persistence API (JPA) die aus dem Modell heraus Zugriff auf
+die Datenbank ermöglicht und CRUD-Funktionalitäten bereitstellt.
+[[Datenpersistenz]]
+image::./models/design/Datenpersistenz.png[Datenpersistenz, 100%, 100%, pdfwidth=100%, title= "Datenpersistenz von {project_name}", align=center, caption="Abbildung 3: "]
+
+==== Benutzeroberfläche
+Die Benutzeroberfläche hält sich an das im Entwurf enthaltene Mockup-Design. 
+Sie soll leicht bedienbar, schlicht und übersichtlich bleiben. +
+[[Benutzeroberfläche]]
+image::./models/design/User_Interface1.png[B, 80%, 80%, pdfwidth=80%, title= "Benutzeroberfläche von {project_name} (Angebote, Mein Profil, Inkassodienst)", align=center, caption="Abbildung 4: "]
+
+image::./models/design/User_Interface2.png[B, 80%, 80%, pdfwidth=80%, title= "Benutzeroberfläche von {project_name} (Personalverwaltung)", align=center, caption="Abbildung 5: "]
+
+image::./models/design/User_Interface3.png[B, 80%, 80%, pdfwidth=80%, title= "Benutzeroberfläche von {project_name} (Lagerverwaltung, Buchhaltung)", align=center, caption="Abbildung 6: "]
+
+image::./models/design/User_Interface4.png[B, 80%, 80%, pdfwidth=80%, title= "Benutzeroberfläche von {project_name} (Warenkorb, Registrieren)", align=center, caption="Abbildung 7: "]
+
+==== Verwendung externer Frameworks
+Das Salespointframework wird verwendet, um sich mit der Arbeit mit Webannotationen vertraut 
+zu machen und den Workflow von ModelViewControllern zu durchschauen.
+Das Springframework wird für das Grundgerüst des Webservices verwendet, dient jedoch auch
+dazu, den Programmcode überschaubar und gut wartbar zu halten. 
+
+[options="header", cols="1,2"]
+|===
+|Externes Package |Verwendet von
+|springframework.web.bind.annotation		|AccountingController +
+											 UserController +
+											 CustomerAreaController +
+											 BookingController +
+											 WarehouseController +
+											 StaffController +
+											 CollectionAgencyController +
+											 EntertainerController +
+|springframework.web.servlet				|AccountingController +
+											 BookingController +
+											 CollectionAgencyController +
+											 StaffController +
+											 UserController +
+|springframework.ui.model					|UserController	+
+											 CollectionAgencyController +
+											 AccountingController +
+											 WarehouseController +
+											 BookingController +
+											 CustomerAreaController +
+											 StaffController +
+											 EntertainerController +
+|springframework.context					|AccountingManagement +
+|springframework.beans						|CollectionAgencyController +
+											 CollectorManager +
+											 AccountingController +
+											 BookingController +
+											 CustomerAreaController +
+											 EntertainerController +
+											 UserController +
+											 UserDataInitializer +
+											 UserManagement +
+											 WarehouseController
+|springframework.stereotype					|CollectionAgencyController +
+											 CollectionAgencyRepository +
+											 CollectorManager +
+											 AccountingManagement +
+											 AccountingController +
+											 IncomeRepository +
+											 ProfitRepository +
+											 WarehouseController + 
+											 BookingController +
+											 CustomerAreaController +
+											 StaffManagement +
+											 StaffRepository +
+											 StaffController +
+											 EntertainerController +
+											 EntertainerManagement +
+											 EntertainerRepository +
+											 UserController +
+											 UserDataInitializer +
+											 UserManagement +
+|springframework.transaction				|StaffManagement +
+											 AccountingManagement +
+											 EntertainerManagement +
+|springframework.util						|AccountingManagement +
+											 BookingController +
+											 StaffManagement +
+											 StaffController +
+											 CollectorManager +
+											 EntertainerManagement +
+|springframework.data						|CollectionAgencyRepository +
+											 CollectorManager +
+											 IncomeRepository +
+											 ProfitRepository +
+											 AccountingManagement +
+											 EntertainerRepository +
+											 EntertainerManagement +
+											 WarehouseRepository +
+											 StaffManagement +
+											 StaffRepository +
+											 BookingController +
+											 PerformanceRepository +
+											 CollectionAgencyController +
+											 CustomerAreaController +
+											 StaffMember +
+											 User +
+											 UserManagement +
+											 UserRepository +
+|springframework.format						|BookingController +
+											 CustomerAreaController +
+											 WarehouseController
+|springframework.security.core				|UserController
+|salespoint.unencryptedpassword				|RegistrationForm +
+											 UserManagement	+
+											 StaffMember +
+											 UserDataInitializer +
+|salespointframework.useraccount			|UserManagement +
+											 User +
+											 UserController +
+											 UserDataInitializer +
+											 UserRepository +
+											 CollectionAgencyController +
+											 CollectionAgency +
+											 AccountingController +
+											 BookingController +
+											 StaffMember +
+											 CustomerAreaController +
+											 EntertainerController +
+											 StaffController +
+|salespointframework.order					|BookingController +
+											 CustomerAreaController +
+											 UserController +
+|salespointframework.catalog				|Performance +
+											 WarehouseController +
+											 BookingController +
+											 PerformanceRepository +
+|salespointframework.core					|Entertainer +
+											 BookingController +
+											 UserDataInitializer +
+											 Requisite +
+											 StockReceipt +
+											 StockReceiptRepository +
+											 WarehouseRepository
+|salespointframework.quantity				|BookingController +
+|salespointframework.payment				|BookingController +
+											 Creditcard +
+											 Debitcard
+|===
+
+== Bausteinsicht
+=== Registrierung/Login 
+
+image::./models/design/User_Klassendiagramm.png[User_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "User Klassendiagramm", align=center, caption="Abbildung 8: "]
 
 [options="header"]
 |=== 
-|Quality Demand |Solution approach
-|Maintainability a|
-* *Modularity* Compose the application out of discrete components such that changes of a component have less impact on other components.
-* *Reusability* Ensure that components of the system can be reused by other components or systems.
-* *Modifiabilty* Ensure that the application can be modified or extended without introducing errors or degrading the product quality.
-|Usability a|
-* *Learnability* Ensure that the system can be easily used and understood by its users. This can be realized by e.g. unambiguously describing the content of inputs with labels or tooltips. 
-* *User error protection / Error handling* Protect user against making errors. Invalid inputs must not lead to invalid system states. 
-* *User interface aesthetics* Provide a pleasing and satisfying interaction for the user.
-* *Accessibility* Ensure that people with a wide range of characteristics can fully use the system. This can be realized by e.g. using suitable font sizes and color contrasts. 
-|Security a|
-* *Confidentiality* Ensure that only data can be only accessed by people who are authorized to access them. This can be realized with _Spring Security_ and _Thymeleaf_ (`sec:authorize` - tag).
-* *Integrity* Prevent unauthorized modification of data. This can be realized with _Spring Security_ (`@PreAuthorize` - annotation).
-* *Accountability* Traceability of actions or event to a unambiguously entity or person. For this application, every `Order` should be linked to a `Customer`.
+|Klasse/Enumeration |Beschreibung
+|RegistrationForm		|Klasse, welche alle Informationen zur Erstellung eines User und UserAccount beinhaltet
+|User					|Klasse, welche den UserAccount um zusätzliche Angaben erweitert und den Nutzer darstellt
+|UserController			|Klasse zur Bearbeitung von Client-Requests und Validierung der Nutzereingaben bei der Registrierung
+|UserManagement			|Klasse, welche einen neuen User erzeugt
+|UserRepository			|Schnittstelle, die eine Interaktion mit der User-Datenbank ermöglicht
+|UserDataInitializer	|Klasse, welche Testnutzer beim Start der Anwendung erzeugt
+|StaffRepository		|Schnittstelle, die eine Interaktion mit der Mitarbeiter-Datenbank ermöglicht
+
 |===
 
-=== Software Architecture
-image:diagrams/images/videoshop_top_level.svg[tla]
+=== Inkassodienst
 
-_Top Level Architecure of the application_
-
-image:diagrams/images/videoshop_client_server.svg[client server model]
-
-_Client Server Model of the application. The client only contains HTML and CSS files. The application logic is implemented on the server._
-
-*Note: JavaScript is compiled by the client. You can use JavaScript in your application but make sure, that you don't use it to implement any of the application logic!*
-
-HTML-Templates are rendered clientside with their corresponding CSS-Stylesheets. The data shown in the templates is provided by Thymeleaf. Thymeleaf receives the requested data
-by the controller classes, which are implemented in the backend. These controller classes on the other hand use instances and methods of the model classes. By default, an underlying 
-H2 database saves data persistently.
-
-=== Architecture decisions
-
-==== Design Patterns
-* Spring MVC
-
-==== Persistence
-The application uses *Hibernate annotation based mapping* to map Java classes to database tables. As a database, *H2* is used.
-The persistence is deactivated by default. To activate persistence storage, the following two lines in the file _application.properties_ have to be uncommented:
-....
-# spring.datasource.url=jdbc:h2:./db/videoshop
-# spring.jpa.hibernate.ddl-auto=update
-....
-
-==== User Interface
-image:diagrams/images/dialogue_map.svg[dialogue map]
-
-_Note: The blue boxes display a HTML-Template. The white boxes within the templates represent buttons, which redirect to the templates, their outgoing arrows point to._
-
-=== Use of external frameworks
-[options="header"]
-|===
-|External package |Used by (applications' class)
-|salespointframework.catalog a|
-* catalog.Disc
-* catalog.VideoCatalog
-* order.OrderController 
-|salespointframework.core a|
-* catalog.CatalogInitializer
-* customer.CustomerDataInitializer
-* inventory.InventoryInitializer
-|salespointframework.inventory a|
-* catalog.CatalogController
-* inventory.InventoryController
-* inventory.InventoryInitializer
-|salespointframework.order | order.OrderController
-|salespointframework.payment | order.OrderController
-|salespointframework.quantity a|
-* catalog.CatalogController
-* inventory.InventoryInitializer
-* order.OrderController
-|salespointframework.SalespointSecurityConfiguration |videoshop.WebSecurityConfiguration
-|salespointframework.time | catalog.CatalogController
-|salespointframework.useraccount a|
-* customer.Customer
-* customer.CustomerDataInitializer
-* customer.CustomerManagement
-* order.OrderController
-|springframework.boot |videoshop.VideoShop
-|springframework.data a|
-* catalog.VideoCatalog
-* customer.CustomerManagement
-* customer.CustomerRepository
-|springframework.security | videoshop.WebSecurityConfiguration
-|springframework.ui a|
-* catalog.CatalogController
-* customer.CustomerController
-* inventory.InventoryController
-* order.OrderController
-|springframework.util a|
-* customer.CustomerController
-* customer.CustomerDataInitializer
-* order.OrderController
-|springframework.validation |customer.CustomerController
-|springframework.web |videoshop.VideoShopWebConfiguration
-|===
-
-== Building block view
-
-=== Videoshop
-
-image:diagrams/images/videoshop.svg[class design diagram - videoshop]
+image::./models/design/Inkassodienst_Klassendiagramm.png[Inkassodienst_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Inkassodienst Klassendiagramm", align=center, caption="Abbildung 9: "]
 
 [options="header"]
 |=== 
-|Class/Enumeration |Description
-|VideoShop|The central application class to configure the Spring container and run the application
-|VideoShopWebConfiguration|Configuration class to route `/login` directly to the `login.html` template
-|WebSecurityConfiguration|Configuration class to set up basic security and login/logout options
+|Klasse/Enumeration |Beschreibung
+|CollectionAgency		|Klasse, welche einem Nutzer, der mindestens eine Buchung getätigt hat, seine Mahnstufe und seinen Zahlungsverzug zuordnet
+|CollectorManager		|Klasse, welche Mahnstufe und Zahlungsverzug bearbeitet
+|CollectionAgencyController
+						|Klasse zur Bearbeitung von Client-Requests bei Inkassoangelegenheiten.
+|CollectionAgencyRepository
+						|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für die CollectionAgency-Entitäten ermöglicht.
+|User					|Klasse, welche den UserAccount um zusätzliche Angaben erweitert und den Nutzer darstellt
+|UserRepository			|Schnittstelle, die eine Interaktion mit der User-Datenbank ermöglicht
 |===
 
-=== Catalog
+=== Buchhaltung
 
-image:diagrams/images/catalog.svg[class design diagram - catalog]
+image::./models/design/Buchhaltung_Klassendiagramm.png[Buchhaltung_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Buchhaltung Klassendiagramm", align=center, caption="Abbildung 10: "]
 
 [options="header"]
 |=== 
-|Class/Enumeration |Description
-|CatalogController |A Spring MVC Controller to handle requests to show ``Disc``s and create ``Comment``s
-|CatalogInitializer |An implementation of the DataInitializer to create dummy DVDs and BluRays on application startup
-|Comment |A comment which can be written for a `Disc`
-|CommentAndRating |Describes the payload to be expected to add a comment
-|Disc |Class to describe BluRays and DVDs as the products of the videoshop
-|DiscType |Enumeration to define a `Disc` as a DVD or a BluRay
-|VideoCatalog |An extension of Salespoint.Catalog to add videoshop specific queries
+|Klasse/Enumeration 	|Beschreibung
+|EntertainerIncome		|Klasse, welche einem Künstler Angaben zu seinem Einkommen zuordnet
+|ProfitAndLoss			|Klasse, welche einer Abteilung (Künstler oder Lager) den zusammengerechnet Gewinn/Verlust zuordnet
+|IncomeRepository		|Schnittstelle, die eine Interaktion mit der EntertainerIncome-Datenbank ermöglicht
+|ProfitRepository		|Schnittstelle, die eine Interaktion mit der ProfitAndLoss-Datenbank ermöglicht
+|AccountingManagement	|Klasse, welche die Anwendungslogik hinter EntertainerIncome und ProfitAndLoss darstellt
+|AccountingController	|Klasse zur Bearbeitung von Client-Requests bei Anfragen zur Einsicht von
+Künstlereinkommen, Buchungen und GuV-Rechnung 
+|PerformanceRepository	|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für Performance-Entitäten
+ermöglicht
+|StockReceiptRepository	|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für StockReceipt-Entitäten ermöglicht
+|EntertainerRepository	|Schnittstelle, die eine Interaktion mit der Künstler-Datenbank ermöglicht
 |===
 
-=== Customer
 
-image:diagrams/images/customer.svg[class design diagram - customer]
+=== Kundenbereich
+
+[[Kundenbereich]]
+image::./models/design/Kundenbereich_Klassendiagramm.png[Kundenbereich_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Kundenbereich von {project_name}", align=center, caption="Abbildung 11: "]
 
 [options="header"]
 |=== 
-|Class/Enumeration |Description
-|Customer|Custom class to extend the Salespoint-UserAccount with an address
-|CustomerController|A Spring MVC Controller to handle requests to register and show customers
-|CustomerDataInitializer|An implementation of the DataInitializer to create dummy customers on application startup
-|CustomerManagement|Service class to manage customers
-|CustomerRepository|A repository interface to manage Customer-instances
-|RegistrationFrom|An interface to validate the user input of the registration formular
+|Klasse/Enumeration 		|Beschreibung
+|Performance				|Klasse von Auftritten, wird bei Buchungsvorhaben anhand der Eingaben des Users 
+und anhand des Namens und Stundensatzes des Entertainers erstellt und gespeichert
+|PerformanceRepository		|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für Performance-Entitäten
+ermöglicht
+|BookingController			|Klasse zur Bearbeitung von Client-Requests bei Buchungsvorhaben
+|Comment					|Klasse von Kommentaren zu Künstlern, werden als Liste der
+Entertainer-Instanz angefügt und geben Bewertungen der Künstlerdarbietungen an
+|CustomerAreaController		|Klasse zur Bearbeitung von Client-Requests bei Anfragen zur Darstellung von
+Künstlern und Künstlerdetailansichten
+|Debitcard					|Klasse, die eine Zahlung mit einer Debitkarte simuliert
+|Creditcard					|Klasse, die eine Zahlung mit einer Kreditkarte simuliert
+|CollectorManager			|Klasse, welche Mahnstufe und Zahlungsverzug bearbeitet
+|UserRepository				|Schnittstelle, die eine Interaktion mit der User-Datenbank ermöglicht
+|Entertainer				|Klasse, welche die zu benötigenden Angaben für den Künstler vorgibt. Jedem Künstler ist genau ein User mit entsprechenden UserAccount zugeordnet.
+|EntertainerRepository		|Schnittstelle, die eine Interaktion mit der Künstler-Datenbank ermöglicht
 |===
 
-=== Inventory
+=== Lagerverwaltung
 
-image:diagrams/images/inventory.svg[class design diagram - inventory]
+[[Lagerverwaltung]]
+image::./models/design/Lagerverwaltung_Klassendiagramm.png[Lagerverwaltung_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Lagerverwaltung von {project_name}", align=center, caption="Abbildung 12: "]
 
 [options="header"]
 |=== 
-|Class/Enumeration |Description
-|InventoryController|A Spring MVC Controller to handle the request to show the stock of the shop
-|InventoryInitilalizer|An implementation of the DataInitializer to create dummy data on application startup
+|Klasse/Enumeration 			|Beschreibung
+|Requisite						|Klasse von Requisiten, die den Künstlern bei Auftritten zur Verfügung gestellt
+werden sollen/können
+|StockReceipt					|Klasse, die beim Kauf einer Requisite den Wareneingang erfasst
+|WarehouseController 			|Klasse zur Bearbeitung von Client-Requests bei Änderungen des Bestandes von Requisiten
+|WarehouseRepository			|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für Requisiten-Entitäten ermöglicht
+|StockReceiptRepository			|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für StockReceipt-Entitäten ermöglicht
 |===
 
-=== Order
-
-image:diagrams/images/order.svg[class design diagram - order]
+=== Künstlerverwaltung
+image::./models/design/Entertainerverwaltung_Klassendiagramm.png[Entertainerverwaltung_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Entertainerbereich von {project_name}", align=center, caption="Abbildung 13: "]
 
 [options="header"]
 |=== 
-|Class/Enumeration |Description
-|OrderController|A Spring MVC Controller to handle the cart
+|Klasse/Enumeration 	|Beschreibung
+|Entertainer			|Klasse, welche die zu benötigenden Angaben für den Künstler vorgibt. Jedem Künstler ist genau ein User mit entsprechenden UserAccount zugeordnet.
+|EntertainerManagement	|Klasse, welche neue Künstler erzeugen, löschen und bearbeiten kann.
+|EntertainerController	|Klasse zur Bearbeitung von Client-Requests zum Einsehen der Künstlerverwaltung
+|EntertainerRepository	|Schnittstelle, die eine Interaktion mit der Künstler-Datenbank ermöglicht
+|User					|Klasse, welche den UserAccount um zusätzliche Angaben erweitert und den Nutzer darstellt
+|UserRepository			|Schnittstelle, die eine Interaktion mit der User-Datenbank ermöglicht
+|PerformanceRepository		|Schnittstelle, die eine Interaktion mit der JPA-Datenbank für Performance-Entitäten
+ermöglicht
 |===
 
-=== Traceability between Analysis- and Design Model
-_Note: The following table shows the Forward- and Backward Traceability from the Analysis Model to the Design Model and vice versa. If an external class is used in the design model, the kind of usage of this external class is defined in the *Usage*-Column,
-using one of the following options:_
+=== Personalverwaltung
 
-* Inherictance/Interface-Implementation
+[[Personalverwaltung]]
+image::./models/design/Personalverwaltung_Klassendiagramm.png[Personalverwaltung_Klassendiagramm, 100%, 100%, pdfwidth=100%, title= "Personalverwaltung von {project_name}", align=center, caption="Abbildung 14: "]
+
+[options="header"]
+|=== 
+|Klasse/Enumeration 		|Beschreibung
+|StaffMember				|Klasse, welche Daten zu den Mitarbeitern beinhaltet. Jedem Mitarbeiter ist genau ein User mit entsprechenden UserAccount zugeordnet.
+|StaffManagement			|Klasse, welche neue Mitarbeiter erzeugen, löschen und bearbeiten kann
+|StaffController 			|Klasse zur Bearbeitung von Client-Requests bei Änderung, Entlassung oder Einstellen von Mitarbeitern
+|StaffRepository			|Schnittstelle, die eine Interaktion mit der Mitarbeiter-Datenbank ermöglicht
+|User						|Klasse, welche den UserAccount um zusätzliche Angaben erweitert und den Nutzer darstellt
+|UserManagement				|Klasse, welche einen neuen User erzeugt
+|Entertainer				|Klasse, welche die zu benötigenden Angaben für den Künstler vorgibt. Jedem Künstler ist genau ein User mit entsprechenden UserAccount zugeordnet.
+|EntertainerManagement	|Klasse, welche neue Künstler erzeugen, löschen und bearbeiten kann.
+|EntertainerRepository		|Schnittstelle, die eine Interaktion mit der Künstler-Datenbank ermöglicht
+|===
+
+=== Rückverfolgbarkeit zwischen Analyse- und Entwurfsmodell
+_Die folgende Tabelle zeigt die Rückverfolgbarkeit zwischen Entwurfs- und Analysemodell. 
+Falls eine Klasse aus einem externen Framework im Entwurfsmodell eine Klasse des Analysemodells ersetzt,
+wird die Art der Verwendung dieser externen Klasse in der Spalte *Art der Verwendung* mithilfe der 
+folgenden Begriffe definiert:_
+
+* Inheritance/Interface-Implementation
 * Class Attribute
 * Method Parameter
 
 [options="header"]
 |===
-|Class/Enumeration (Analysis Model) |Class/Enumeration (Design Model) |Usage
-|BluRay                 a|
-						* catalog.Disc
-						* catalog.DiscType |
-|Cart                   |Salespoint.Cart | Method Parameter 
-|CartItem               |Salespoint.CartItem (via Salespoint.Cart) | Method Parameter (via Salespoint.Cart)
-|ChargeLine             |Salespoint.ChargeLine (via Salespoint.Order) | Method Parameter (via Salespoint.Order)
-|Comment                |catalog.Comment |
-|Dvd                    a|
-						* catalog.Disc
-						* catalog.DiscType |
-|Inventory              |Salespoint.UniqueInventory a|
-						* Class Attribute
-						* Method Parameter
-|InventoryItem          |Salespoint.UniqueInventoryItem | Method Parameter
-|Order                  |Salespoint.Order | Method Parameter
-|OrderLine              |Salespoint.Orderline (via Salespoint.Order) | Method Parameter (via Salespoint.Order)
-|OrderManager           |Salespoint.OrderManager<Order> a|
-						* Class Attribute
-						* Method Parameter
-|OrderStatus            |Salespoint.OrderStatus | Method Parameter
-|ROLE/Role              |Salespoint.Role | Method Parameter
-|User                   a|
-						* Salespoint.UserAccount 
-						* customer.Customer a|
-						* Class Attribute
-						* Method Parameter
-|Videoshop              |videoshop.Videoshop |
+|Klasse/Enumeration (Analysemodell) |Klasse/Enumeration (Entwurfsmodell) 	|Art der Verwendung
+|Customer				|RegistrationForm +
+			 			User								
+															|*inheritance* +
+															UserAccount (salespoint)- Einzigartigkeit der Kunden
+															
+									 
+|Customer				|UserManagement						|UserAccountManagement (salespoint) +
+															*Interface-Implementation* +
+															AuthenticationManagement +
+															UserAccountManagement +
+															*Method Parameter* +
+															PasswordPassword +
+															EncryptedPasswordPassword +
+															UnencryptedPassword +
+															Role +
+															UserAccount +
+															UserAccount.UserAccountCreated 
+|Collector				|Salespoint.UserAccount				|*Method Parameter*
+|Stock                  |UniqueInventory<UniqueInventoryItem> WarehouseRepository    |*Interface-Use*
+|Booking                |OrderManagement<Order>    Catalog<Performance>              |*Interface-Use*
+|StaffMember            |Salespoint.UserAccount             |*Method Parameter*
+
 |===
 
-== Runtime view
+== Laufzeitsicht
+=== Registrierung/Login
+image::./models/design/User_Sequenzdiagramm.png[Registrierung/Login, 100%, 100%, pdfwidth=100%, title= "Registrierung/Login", align=center, caption="Abbildung 15: "]
 
-_Note: For your developer documentation you only have to create a diagram of one component, which shows the most relevant interactions_
+=== Inkassodienst
 
-=== Catalog
-image:diagrams/images/seq_catalog.svg[sequence diagram - catalog]
+image::./models/design/Inkassodienst_Sequenzdiagramm.png[Inkassodienst_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Inkassodienst Sequenzdiagramm", align=center, caption="Abbildung 16: "]
 
-=== Customer
-image:diagrams/images/seq_customer.svg[sequence diagram - customer]
+=== Buchhaltung
 
-=== Inventory
-image:diagrams/images/seq_inventory.svg[sequence diagram - inventory]
+image::./models/design/Buchhaltung_Sequenzdiagramm.png[Buchhaltung_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Buchhaltung Sequenzdiagramm", align=center, caption="Abbildung 17: "]
 
-=== Order
-image:diagrams/images/seq_order.svg[sequence diagram - order]
+=== Kundenbereich
 
-== Technical debt
+image::./models/design/Kundenbereich_Sequenzdiagramm.png[Kundenbereich_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Kundenbereich von {project_name}", align=center, caption="Abbildung 18: "]
 
-=== Quality Gates
-_Note: In this section, all failed Quality Gates are listed. These ratings go from *A* (best) to *E* (worst).
-This chapter should only be written at the end of your project._
-[options="header"] 
-|===
-|Quality Gate | Actual Value | Goal
-|Reliability | C | A
-|Coverage | 0.0% | 50.0%
-|===
+=== Lagerverwaltung
 
-=== Issues
-_Note: In this section, all SonarQube issues of the priority *Blocker*, *Critical* and *Major* are listed, as well as common *Minor*-Issues_
-[options="header"]
-[options="header", cols="1, 2, 2, 2"]
-|===
-|Priority |Description |Location |Corresponding Quality Gate
-|Major |The return value of "orElseGet" must be used| videoshop.InventoryInitializer line 66 |Reliability
-|Minor |Assign this magic number _X_ to a well-named constant, and use the constant instead a|
-* 17 appearances within catalog.CatalogInitializer
-* 1 appearance within inventory.InventoryInitializer
-* 1 appearance within order.OrderController |None
-|Minor |Lines should not be longer than 120 characters a|
-* 1 appearance within catalog.Disc 
-* 1 appearance within customer.Customer 
-* 1 appearance within customer.RegistrationForm |None 
-|===
+image::./models/design/Lagerverwaltung_Sequenzdiagramm.png[Lagerverwaltung_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Lagerverwaltung von {project_name}", align=center, caption="Abbildung 19: "]
+
+=== Künstlerverwaltung
+
+image::./models/design/Entertainerverwaltung_Sequenzdiagramm.png[Entertainerverwaltung_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Künstlerverwaltung Sequenzdiagramm", align=center, caption="Abbildung 20: "]
+
+=== Personalverwaltung
+
+image::./models/design/Personalverwaltung_Sequenzdiagramm.png[Personalverwaltung_Sequenzdiagramm, 100%, 100%, pdfwidth=100%, title= "Personalverwaltung Sequenzdiagramm", align=center, caption="Abbildung 21: "]
+
