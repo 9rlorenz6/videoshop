@@ -1,0 +1,137 @@
+= Lastenheft - _DDS Baugenehmigungsverfahren_
+:toc:
+:toc-title: Inhaltsverzeichnis
+
+
+Teammitglieder: Richard Lorenz, Sören Taube, Thomas Berthold, Romy Franz, Abdelghafour Kaouch
+
+Version 0.1
+
+
+== Zusammenfassung
+Dieses Dokument stellt das Lastenheft des Projekts _DDS Baugenehmigungsverfahren_ dar. Es soll einen Überblick 
+über die zu erstellende Software bieten und fungiert als Vermittlungsmedium zwischen den Stakeholdern und
+dem Projekt. Es beschreibt, welche Anforderungen die Software erfüllen soll. Sobald der Auftraggeber dieses Lastenheft akzeptiert hat, beginnt die Umsetzung des Projekts.
+
+== Aufgabenstellung und Zielsetzung
+Es soll ein regelbasiertes Decision Support System (DDS) / Entscheidungsunterstützungssystem in Form einer eigenständigen Microservice Architektur für das Baugenehmigungsverfahren entwickelt werden. Als Vorlage dient dafür ein bereits von Seder und Weinkauf entworfenes DDS in Form einer Client/Server Architektur.
+
+Das DDS hat zum Ziel Unterstützung bei der Beratung und Entscheidungsfindung von Bauvorhaben zu bieten. Von Interesse ist das für diverse Interessengruppen wie einfache Bürger, Politiker oder Vereine.
+
+Umgesetzt wird das durch eine interaktive Karte, auf die der Nutzer eingeben kann, wo genau er eine Beratung erfragen möchte. Daraufhin kann er noch weitere Spezifikationen für die Analyse vornehmen. Das Ergebnis sind farbgekennzeichnete Standortpunkte im gewünschten Umkreis, die aussagen, ob es in diesem Gebiet zu Baukonflikten kommen kann oder nicht.
+
+
+[[FAnforderungen]]
+== Funktionale Anforderungen
+
+In diesem Abschnitt erfolgt eine Übersicht über alle funktionalen Anforderungen an das DDS.
+Die Anforderungen werden zur besseren Zuordnung im weiteren Projektverlauf mit einer ID versehen und versioniert.
+Zudem erfolgt über die Angabe der Kategorie nach der MoSCoW-Methode (M - Must, S - Should, C - Could, W - Won't)
+eine grobe Priorisierung der einzelnen Anforderungen, die bei der Implementierung zu berücksichtigen ist.
+
+[options="header", cols="11%h, ^10%, 17%, ^12%, 50%"]
+|===
+|ID
+|Version
+|Name
+|Kategorie
+|Beschreibung
+
+|[[AF0100]]<<AF0100>>
+|v1.0
+|Karte
+|M
+| Es wird eine interaktive Karte der Region Merseburg angezeigt, auf der man den gewünschten Standort des Bauvorhabens anklicken kann.
+
+|[[AF0101]]<<AF0101>>
+|v1.0
+|Dateneingabe
+|M
+| Nach dem Klick auf die Karte erscheint ein Fenster zur weiteren Eingabe von Daten. Diese umfassen den Umkreis der Analyse, welche Kriterien in der Analyse beachtet werden sollen (Denkmalschutz, Wasserspiegel, Lärmbelastung etc.) und das Bauvorhaben (Einfamilienhaus, Geschäft, Parkplatz etc.).
+
+|[[AF0102]]<<AF0102>>
+|v1.0
+|Ergebnisdarstellung
+|M
+| Nach der Dateneingabe erfolgt die Ausgabe eines Ergebnisses. Das Ergebnis ist eine Karte, die alle bebaubaren Standorte im gewünschten Umkreis anzeigt und in einem Farbschema darstellt, ob Konflikte auftreten.
+
+* Grün - Konflikt unwahrscheinlich
+* Gelb - Konflikt möglich
+* Rot  - Konflikt wahrscheinlich
+
+|[[AF0103]]<<AF0103>>
+|v1.0
+|Kartenveranschaulichung
+|S
+| Es sollte möglich sein, dass die Karte vergrößert und verkleinert werden kann. Zudem sollten bestimmte Daten (Windkraftanlagen, Friedhöfe, Kirchen etc.) ein- und ausgeblendet werden können.
+
+|[[AF0104]]<<AF0104>>
+|v1.0
+|Erläuterungen
+|S
+| Der Nutzer sollte die Möglichkeit haben, sich die Daten und das Analyseverfahren näher erläutern zu lassen. (z.B. Was bedeutet Stratigraphie? Welche Tiere werden bei dem Artenschutz berücksichtigt?)
+
+|[[AF0105]]<<AF0105>>
+|v1.0
+|Speichern
+|C
+| Die Ergebniskarte könnte als PDF abspeicherbar sein.
+
+
+|===
+
+[[NFAnforderungen]]
+== Nicht-Funktionale Anforderungen
+
+In Abgrenzung zu den funktionalen Anforderungen werden im Folgenden die nicht-funktionalen Anforderungen erfasst.
+Bei diesen handelt es sich um Anforderungen, welche an die Anwendung als Ganzes gestellt werden. Nicht-funktionale Anforderungen können sich dabei gegenseitig beeinflussen.
+
+Die gegenseitige Beeinflussung führt dazu, dass Entscheidungen getroffen werden müssen, welcher nicht-funktionalen Anforderung gegebenenfalls Vorrang vor einer anderen einzuräumen ist.
+Die Qualitätsmerkmale der zu erstellenden Anwendung und ihre Wichtigkeit (von 1 = geringe Wichtigkeit bis 5 = hohe Wichtigkeit), die für eine Entscheidungsfindung herangezogen werden sollen, lauten wie folgt:  
+
+[options="header", cols="3h, ^1, ^1, ^1, ^1, ^1"]
+|===
+|Qualitätsmerkmal  | 1 | 2 | 3 | 4 | 5
+|Bedienbarkeit     |   |   |   | x |
+|Sicherheit        |   |   | x |   |
+|Zuverlässigkeit   |   |   |   | x |
+|Wartbarkeit       |   | x |   |   |
+|Erweiterbarkeit   | x |   |   |   |
+|===
+
+Die für die Anwendung erforderlichen nicht-funktionalen Anforderungen ergeben sich laut Übersicht:
+
+[options="header", cols="2h, ^1, 3, 12"]
+|===
+|ID
+|Version
+|Name
+|Beschreibung
+
+|[[AN0100]]<<AN0100>>
+|v1.0
+|Verfügbarkeit der Anwendung
+|Die Anwendung muss mindestens eine Verfügbarkeit von 99,5% aufweisen (das entspricht einer maximalen
+Ausfallzeit von 1d 19h 48min bei einem Betrieb 24/7 pro Jahr).
+
+|[[AN0101]]<<AN0101>>
+|v1.0
+|Persistenz
+|Die Faktendaten müssen persistent in einer Datenbank gespeichert werden.
+
+|[[AN0102]]<<AN0102>>
+|v1.0
+|Zuverlässiges Entscheidungsverfahren
+|Die Anwendung muss eine korrekte Entscheidung anhand der eingegeben Daten ausgeben.
+
+|[[AN0103]]<<AN0103>>
+|v1.0
+|Regeln pflegen
+|Die Regeln zur Entscheidungsfindung sollen mittels XML-Stardardeditoren editierbar sein.
+
+|[[AN0104]]<<AN0104>>
+|v1.0
+|Vertrauenswürdigkeit
+|Die hinterlegten Faktendaten und Entscheidungsregeln sollten nicht falsch oder lückenhaft sondern vollkommen vertrauenswürdig sein.
+
+|===

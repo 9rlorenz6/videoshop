@@ -1,0 +1,183 @@
+*
+{
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    /*border: 1px solid #F00;*/
+}
+
+
+/*----------------------------------GRID----------------------------------------*/
+body
+{
+    display: grid;
+    grid-template-rows: 13em 3em 1fr 2em;
+    grid-template-areas:
+        "header"
+        "nav"
+        "main"
+        "footer";
+}
+header
+{
+    grid-area: header;
+}
+nav
+{
+    grid-area: nav;
+}
+main
+{
+    grid-area: main;
+}
+footer
+{
+    grid-area: footer;
+}
+
+/*-----------------------------------HEADER---------------------------------------*/
+header
+{
+    color:#0B6138;
+    background: #FCB71C url("bilder/banner_final.png");
+    background-size:cover;
+    height: 13em;
+} 
+
+
+
+/*----------------------------------NAVIGATION-----------------------------------*/
+nav
+{
+    background-color: #0B6138;
+    text-align: center;
+}
+
+nav li
+{
+    display: inline;
+    list-style-type: none;
+    font-size: 18px;
+    color: #FFF;
+    background-color: #0B6138;
+    margin-right: 35px;   
+}
+
+nav li#aktiv
+{
+    color: #FFF;
+    font-weight: bold;
+    cursor:default;
+}
+
+nav li a:visited, nav li a:link
+{
+    color: #FFF;
+    text-decoration: none;
+}
+
+
+/*---------------------------------------BODY----------------------------------------*/
+body
+{
+    color: #000;
+    background-color:#F3E2A9;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+/*-------------------------------------FOOTER-----------------------------------------*/
+footer
+{
+    background-color: #0B6138;
+}
+
+footer p
+{
+    padding: 0.4em 0 0 0;
+    margin: 0;
+    color: #FFF;
+    text-align:center;
+}
+
+/*---------------------------------ÜBERSCHRIFTEN--------------------------------------*/
+h1
+{
+    color:#FFF;
+    background-color: transparent;
+    font-size: 2.5em;
+    text-align: center;
+    margin-left: 10em;
+    margin-top: 2em;
+}
+
+h2
+{
+    color:#DF7401;
+    padding-left:4em;
+}
+
+h3
+{
+    color: #FCB71C;
+    padding-left:6em;
+}
+
+/*-----------------------------------EINGERUECKT----------------------------------------*/
+form#contact,p
+{
+    padding-left:7em;
+    padding-right:7em;
+}
+
+
+/*-------------------------------------FORMULAR-----------------------------------------*/
+
+.eingabe
+{
+float: right;
+margin-right:70em;
+}
+.absenden
+{
+    color: #FFF;
+    background-color: #FCB71C;
+}
+
+/*---------------------------------Article&Section-------------------------------------*/
+article
+{
+    margin-top: 30px;
+    line-height: 160%;
+    margin-bottom: 30px;
+}
+section
+{
+    margin-top: 20px;
+    text-align: justify;
+    margin-bottom:60px;
+}
+/*-------------------------------------TABELLE-----------------------------------------------*/
+table
+{
+    margin-left: 7em;
+    margin-right: 7em;
+}
+
+td:first-child
+{
+    width:6em;
+    padding-right: 3em;
+    vertical-align:top;
+}
+
+td#karte
+{
+    padding-left: 3em;
+    width:750px;
+}
+
+td.map_option
+{
+    width: 16em;
+    padding-top:1em;
+}

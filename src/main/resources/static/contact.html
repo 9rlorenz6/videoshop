@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="Abdelghafour Kaouch" />
+        <meta name="description" content="Kontaktseite der Webseite" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="Formate.css" type="text/css" />
+        <title>Baugenehmigungs-Entscheidungssystem</title>
+    </head>
+    <body>
+        <header>
+            <h1>Baugenehmigungs-Entscheidungssystem</h1>
+        </header>
+        <nav id="navigation">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="anleitung.html">Anleitung</a></li>
+                <li><a href="system.html">Entscheidungssystem</a></li>
+                <li id="aktiv">Kontakt</li>
+            </ul>   
+        </nav>
+        <main>
+            <article>
+                <h2>Kontakt</h2>
+                <section>
+                    <h3>Noch Fragen, Anregungen oder Kritik?</h3>
+                    <p>Kontaktieren Sie uns gern mit dem folgenden Formular und teilen Sie uns Ihre Gedanken und Ideen mit.</p>
+                    <form id="contact" action="mailto:musterstudent@uni.de" method="post"> <!--Technische Funktion nicht nötig-->
+                        Name: <input class="eingabe" type="text" name="text"/><br/>
+                        Vorname:<input class="eingabe" type="text" name="text"/><br/>
+                        E-Mail:<input class="eingabe" type="email" name="mail"/><br/><br/>
+                        Bitte geben Sie hier Ihre Nachricht ein:<br/>
+                        <div>
+                            <textarea cols="60" rows="20" name="textfeld"></textarea>
+                        </div>
+                        
+                        <input class="absenden" type="submit" value="Absenden"/>
+                    </form>
+                </section>
+            </article>
+        </main>
+        <footer>
+            <p>Stand: 05/2023</p> 
+        </footer>
+    </body>
+</html>
