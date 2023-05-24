@@ -5,6 +5,7 @@ import model.Element;
 import model.Project;
 
 
+
 public class EnvironmentAnalyzer {
 	
 	public static void main(String[] args) {
@@ -27,5 +28,4 @@ public class EnvironmentAnalyzer {
 		
 		return elements;
 	}
-	
 }
