@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import model.Element;
 import model.Project;
 
-
-
 public class EnvironmentAnalyzer {
 	
 	public static void main(String[] args) {
@@ -13,7 +11,7 @@ public class EnvironmentAnalyzer {
 		
 	}
 	public ArrayList<Element> getAnalysis(ArrayList<Element> elements, Project project) {
-		
+		 
 		/*TODO:
 		 * XML-Auswertung unserer Kriterien sammeln und vergleichen
 		 * für jedes Kriterium 1 neues Element mit "unbedenklich" oder Erläuterungstext was fehlt

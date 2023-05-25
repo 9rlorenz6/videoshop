@@ -1,13 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<packaging>pom</packaging>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+ 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>Root-Analyzer</groupId>
+	<groupId>MITP.Root-Analyzer</groupId>
 	<artifactId>Project-Analyzer</artifactId>
 	<version>1.0.0</version>
 	<name>Hauptmodul DSS</name>
 	<description>Hauptprogramm mit Submodulen</description>
-
+	<packaging>pom</packaging>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -20,20 +20,17 @@
     	<maven.compiler.source>17</maven.compiler.source>
 	</properties>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>Semantic-UI</artifactId>
 			<version>2.4.1</version>
 			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
@@ -45,18 +42,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-
-		
-		
 		<dependency>
 		    <groupId>org.thymeleaf</groupId>
 		    <artifactId>thymeleaf</artifactId>
 	    </dependency>
+	    <dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-jar-plugin</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
 	</dependencies>
 
 
@@ -84,7 +82,7 @@
 		    <scope>provided</scope>
 		</dependency>
 			<dependency>
-				<groupId>Root-Analyzer</groupId>
+				<groupId>MITP.Root-Analyzer</groupId>
 				<artifactId>Model</artifactId>
 				<version>1.0.0</version>
 			</dependency>
@@ -111,42 +109,10 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-		 	   <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-jar-plugin</artifactId>
-		        <configuration>
-		          <archive>
-		            <manifest>
-		              <addClasspath>true</addClasspath>
-		              <mainClass>app.Application.java</mainClass>
-		            </manifest>
-		          </archive>
-	       		 </configuration>
-	      	</plugin>
-	      	<plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-compiler-plugin</artifactId>
-		        <configuration>
-		            <encoding>UTF-8</encoding>
-		            <source>17</source>
-		            <target>17</target> 
-		        </configuration>
-   			</plugin>
-	      	
-		</plugins>
-	</build>
 
 	<modules>
-		<module>Model</module>
 		<module>Environment</module>
 		<module>Building</module>
-		
+		<module>Model</module>
 	</modules>
 </project>

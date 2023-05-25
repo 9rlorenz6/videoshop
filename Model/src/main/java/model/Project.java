@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import javax.json.JsonObject;
 
-public final class Project {
+public class Project {
 
 	private int criteria1;
 	private int criteria2;

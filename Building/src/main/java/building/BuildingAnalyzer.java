@@ -21,6 +21,7 @@ public class BuildingAnalyzer {
 		 * 
 		 * 
 		 * */
+	
 		elements.add(null);
 		
 		return elements;

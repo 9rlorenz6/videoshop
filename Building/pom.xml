@@ -3,10 +3,11 @@
   		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>Root-Analyzer</groupId>
+    <groupId>MITP.Root-Analyzer</groupId>
     <artifactId>Project-Analyzer</artifactId>
     <version>1.0.0</version>
   </parent>
+  <packaging>jar</packaging>
   <artifactId>Building</artifactId>
   <name>Gebäude-Bereich</name>
   <description>Gebäude-Kriterien werden hier beleuchtet</description>
@@ -29,7 +30,7 @@
 		    <artifactId>servlet-api</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>Root-Analyzer</groupId>
+			<groupId>MITP.Root-Analyzer</groupId>
 			<artifactId>Model</artifactId>
 		</dependency>
 		<dependency>
