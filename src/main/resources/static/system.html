@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="author" content="Abdelghafour Kaouch" />
+        <meta name="description" content="Kontaktseite der Webseite" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="Formate.css" type="text/css" />
+        <title>Baugenehmigungs-Entscheidungssystem</title>
+    </head>
+    <body>
+        <header>
+            <h1>Baugenehmigungs-Entscheidungssystem</h1>
+        </header>
+        <nav id="navigation">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="anleitung.html">Anleitung</a></li>
+                <li id="aktiv">Entscheidungssystem</li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>   
+        </nav>
+        <main>
+            <article>
+                <h2>Entscheidungssystem</h2>
+                <section>
+                    <h3>Eingabe der Werte und Optionsauswahl</h3>
+                    <p>Hier bitte die Werte und Optionen auswählen, welche in die Betrachtung einbezogen werden sollen. Mit einem Mausklick auf die nebenstehende Karte können Sie zudem den Rechts- und Hochwert (Koordinaten) festlegen. Genaueres zu der Handhabung des Entscheidungssystems finden Sie unter dem Menüpunkt Anleitung.</p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Rechtswert:</td>
+                                <td>
+                                    <input type="text" id="rechtswert" readonly>
+                                </td>
+                                <td id="karte" rowspan="6">
+                                    <div id="map" style="width: 100%; height: 400px;"></div>
+                                    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+                                    <script>
+        var map = L.map('map').setView([51.340632, 12.374732], 13); // Koordinaten und Zoom-Level einstellen
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        var marker;
+
+        function onMapClick(e) {
+            if (marker) {
+                map.removeLayer(marker);
+            }
+
+            marker = L.marker(e.latlng).addTo(map);
+
+            var lat = e.latlng.lat.toFixed(6);
+            var lng = e.latlng.lng.toFixed(6);
+
+            document.getElementById('rechtswert').value = lng;
+            document.getElementById('hochwert').value = lat;
+        }
+
+        map.on('click', onMapClick);
+    </script>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>Hochwert:</td>
+                                <td>
+                                    <input type="text" id="hochwert" readonly>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Umkreis von:</td>
+                                <td>
+                                    <form>
+                                        <input name="umkreis" type="number"> m
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Welche Themen sollen abgefragt werden?</td>
+                                <td>
+                                    <input type="checkbox" name="artenschutz" id="artenschutz" value="artenschutz">
+                                    <label for="artenschutz">UNB-Artenschutz</label><br>
+                                    
+                                    <input type="checkbox" name="wasserspiegel" id="wasserspiegel" value="wasserspiegel">
+                                    <label for="wasserspiegel">UWB-Wasserspeigel</label><br>
+                                    
+                                    <input type="checkbox" name="wasseranalyse" id="wasseranalyse" value="wasseranalyse">
+                                    <label for="wasseranalyse">UWB-Wasseranalysen</label><br>
+                                    
+                                    <input type="checkbox" name="aufschluss" id="aufschluss" value="aufschluss">
+                                    <label for="aufschluss">UWB-Aufschlüsse</label><br>
+                                    
+                                    <input type="checkbox" name="stratigraphie" id="stratigraphie" value="stratigraphie">
+                                    <label for="stratigraphie">UWB-Stratigraphie</label><br>
+                                    
+                                    <input type="checkbox" name="organik" id="organik" value="organik">
+                                    <label for="organik">UWB-Analysen-Organik</label><br>
+                                    
+                                    <input type="checkbox" name="gesteine" id="gesteine" value="gesteine">
+                                    <label for="gesteine">UWB-Gesteine</label><br>
+                                    
+                                    <input type="checkbox" name="gewerblich" id="gewerblich" value="gewerblich">
+                                    <label for="gewerblich">UIB-Gewerbe</label><br>
+                                    
+                                    <input type="checkbox" name="tierhaltung" id="tierhaltung" value="tierhaltung">
+                                    <label for="tierhaltung">UNB-Tierhaltung</label><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Bewertung:</td>
+                                <td>
+                                    <input type="checkbox" name="bewertung" id="bewertung" value="bewertung">
+                                    <label for="bewertung">durchführen</label><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Anwendungsfall:</td>
+                                <td>
+                                    <form>
+                                        <select name="Anwendungsfall">
+                                            <option selected disabled>Auswahl</option>
+                                            <option value="familie">Einfamilienhaus</option>                
+                                            <option value="gewerbe">Gewerbliche Nutzung</option>
+                                            <option value="platte">Plattenbau</option>
+                                        </select>
+                                    </form> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <br>
+                                    <input class="senden" type="submit" value="Absenden"/>
+                                </td>
+                                <td>
+                                    <br>
+                                    <input class="return" type="submit" value="Zurücksetzen"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <section>
+                    <h3>Ergebniskarte</h3>
+                    <p>Zu folgendem Ergebnis führten die ausgewählten Optionen:</p>
+                    <table>
+                        <tr>
+                            <td class="map_option">
+                                <input type="checkbox" name="treffer" id="treffer" value="treffer">
+                                <label for="treffer">Recherchetreffer</label><br>
+                                
+                                <input type="checkbox" name="unwahrscheinlich" id="unwahrscheinlich" value="unwahrscheinlich">
+                                <label for="unwahrscheinlich">Konflikte unwahrscheinlich</label><br>
+                                
+                                <input type="checkbox" name="moeglich" id="moeglich" value="moeglich">
+                                <label for="moeglich">Konflikte moeglich</label><br>
+                                
+                                <input type="checkbox" name="wahrscheinlich" id="wahrscheinlich" value="wahrscheinlich">
+                                <label for="wahrscheinlich">Konflikte wahrscheinlich</label><br>
+                                
+                                <input type="checkbox" name="vorhaben" id="vorhaben" value="vorhaben">
+                                <label for="vorhaben">Vorhaben</label><br> 
+                            </td>
+                            <td rowspan="2">Hier Ergebniskarte einfügen :)</td>
+                        </tr>
+                        <tr>
+                            <td class="map_option">
+                                <input type="radio" name="hintergrund1" id="hintergrund1" value="hintergrund1">
+                                <label for="hintergrund1">Hintergrund 1:100.000</label><br>
+                                <input type="radio" name="hintergrund2" id="hintergrund2" value="hintergrund2">
+                                <label for="hintergrund2">Hintergrund 1:25.000</label><br>
+                                <input type="radio" name="hintergrund3" id="hintergrund3" value="hintergrund3">
+                                <label for="hintergrund3">Hintergrund 1:10.000</label><br>
+                                
+                                <input type="checkbox" name="landschaftsg" id="landschaftsg" value="landschaftsg">
+                                <label for="landschaftsg">Landschaftsschutzgebiet</label><br>
+                                <input type="checkbox" name="natursg" id="natursg" value="natursg">
+                                <label for="natursg">Naturschutzgebiet</label><br>
+                                <input type="checkbox" name="naturdenkmal" id="naturdenkmal" value="naturdenkmal">
+                                <label for="naturdenkmal">Naturdenkmale</label><br>
+                                <input type="checkbox" name="fndenkmal" id="fndenkmal" value="fndenkmal">
+                                <label for="fndenkmal">Flächennaturdenkmale</label><br>
+                                <input type="checkbox" name="trinkwassersz" id="trinkwassersz" value="trinkwassersz">
+                                <label for="trinkwassersz">Trinkwasserschutzzonen</label><br>
+                                <input type="checkbox" name="wka" id="wka" value="wka">
+                                <label for="wka">Windkraftanlagen</label><br>
+                                <input type="checkbox" name="flut" id="flut" value="flut">
+                                <label for="flut">Überschwemmumgsgebiete</label><br>
+                            </td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h3>Statistiken zum Ergebnis</h3>
+                    <p>blabliblub</p>
+                </section>
+            </article>
+        </main>
+        <footer>
+            <p>Stand: 05/2023</p> 
+        </footer>
+    </body>
+</html>

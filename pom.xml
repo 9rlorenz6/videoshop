@@ -1,58 +1,96 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+ 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.tudresden.inf.st</groupId>
-	<artifactId>videoshop</artifactId>
-	<version>2.0.0.BUILD-SNAPSHOT</version>
-	<description>The videoshop is a sample web application based on Spring Boot and the Salespoint framework.</description>
-
+	<groupId>MITP.Root-Analyzer</groupId>
+	<artifactId>Project-Analyzer</artifactId>
+	<version>1.0.0</version>
+	<name>Hauptmodul DSS</name>
+	<description>Hauptprogramm mit Submodulen</description>
+	<packaging>pom</packaging>
 	<parent>
-		<groupId>de.tudresden.inf.st.lab</groupId>
-		<artifactId>st-lab-parent</artifactId>
-		<version>2.4.0-SNAPSHOT</version>
-		<relativePath />
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.1.0</version>
 	</parent>
-
+		
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
+		<maven.compiler.target>17</maven.compiler.target>
+    	<maven.compiler.source>17</maven.compiler.source>
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator-core</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>Semantic-UI</artifactId>
 			<version>2.4.1</version>
 			<scope>runtime</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.6.0</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.thymeleaf</groupId>
+		    <artifactId>thymeleaf</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-jar-plugin</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
 	</dependencies>
 
-	<repositories>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>5.3.16</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.springframework</groupId>
+			    <artifactId>spring-web</artifactId>
+			    <version>6.0.9</version>
+			</dependency>
+			<dependency>
+			    <groupId>javax.json</groupId>
+			    <artifactId>javax.json-api</artifactId>
+			    <version>1.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		    <version>2.5</version>
+		    <scope>provided</scope>
+		</dependency>
+			<dependency>
+				<groupId>MITP.Root-Analyzer</groupId>
+				<artifactId>Model</artifactId>
+				<version>1.0.0</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+
+	<repositories>
 		<repository>
 			<id>spring-release</id>
 			<url>https://repo.spring.io/release</url>
@@ -60,16 +98,9 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-
-		<repository>
-			<id>salespointframework</id>
-			<url>https://www.st.inf.tu-dresden.de/SalesPoint/repository</url>
-		</repository>
-
 	</repositories>
-
+	
 	<pluginRepositories>
-
 		<pluginRepository>
 			<id>spring-release</id>
 			<url>https://repo.spring.io/release</url>
@@ -77,7 +108,11 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</pluginRepository>
-
 	</pluginRepositories>
 
+	<modules>
+		<module>Environment</module>
+		<module>Building</module>
+		<module>Model</module>
+	</modules>
 </project>

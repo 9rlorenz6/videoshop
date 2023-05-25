@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+ 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>MITP.Root-Analyzer</groupId>
+    <artifactId>Project-Analyzer</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>Model</artifactId>
+  <name>Model</name>
+  <packaging>jar</packaging>
+  <description>enthält relevante Java-Klassen für Kapselung von Inhalten für alle Module</description>
+  
+  
+	<dependencies>
+		  <dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+			<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>servlet-api</artifactId>
+		</dependency>
+			<dependency>
+			    <groupId>javax.json</groupId>
+			    <artifactId>javax.json-api</artifactId>
+		</dependency>
+	</dependencies>
+	
+</project>
